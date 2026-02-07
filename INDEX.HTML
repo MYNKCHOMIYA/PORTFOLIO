@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAYANK KUMAR CHOMIYA</title>
+
+    <!--
+      SIMPLE, EDITABLE PORTFOLIO
+      - Change colors: see the :root section in style.css
+      - Change text: just edit the content inside each section below
+    -->
+
+    <link rel="stylesheet" href="style.css" />
+    <!-- Devicon icons for tech logos -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+    />
+  </head>
+  <body>
+    <!-- TOP NAVBAR -->
+    <header class="nav">
+      <div class="nav__logo">
+        <a href="#hero">MAYANK KUMAR</a>
+      </div>
+      <nav class="nav__links">
+        <a href="#hero">Overview</a>
+        <a href="#characters">Projects</a>
+        <a href="#destinations">SKILLS</a>
+        <a href="#media">Media</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO SECTION • INSPIRED BY GTA VI LANDING -->
+      <section id="hero" class="hero">
+        <div class="hero__main">
+          <div class="hero__content reveal">
+            <p class="hero__eyebrow">
+              Bachelor of Technology (B.Tech), Computer Science and Engineering
+              (Data Science )
+            </p>
+            <h1 class="hero__title">MAYANK KUMAR</h1>
+            <p class="hero__subtitle">
+              Building systems. Not just websites.
+            </p>
+
+            <div class="hero__platforms">
+              <a href="#destinations" class="btn btn--ghost">FRONTEND</a>
+              <a href="#destinations" class="btn btn--ghost">BACKEND</a>
+              <a href="#destinations" class="btn btn--ghost">DATA SCIENCE</a>
+            </div>
+
+            <div class="hero__actions">
+              <a href="#media" class="btn btn--primary">MEDIA</a>
+              <a href="#characters" class="btn btn--ghost">PROJECTS</a>
+            </div>
+
+            <p class="hero__meta">
+              Scroll to explore the world, characters, and destinations of
+              <span class="accent">MY LIFE.</span>.
+            </p>
+          </div>
+
+          <!-- PROFILE IMAGE: PLACE YOUR PHOTO AT assets/profile.jpg -->
+          <div class="hero__profile reveal">
+            <div class="hero__avatar-ring">
+              <img
+                src="ASSESTS/file_00000000916472079e59ba3a78b4bc3f.png"
+                alt="Mayank Kumar"
+                class="hero__avatar"
+              />
+            </div>
+          </div>
+        </div>
+        
+
+        <div class="hero__badges">
+          <div class="hero__badge reveal">
+            <span class="hero__badge-label">
+              <a
+                href="https://github.com/MYNKCHOMIYA"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub</a
+              >
+            </span>
+          </div>
+
+          <div class="hero__badge reveal">
+            <span class="hero__badge-label">
+              <a
+                href="https://www.linkedin.com/in/mynk-chomiya/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >LINKDIN</a
+              >
+            </span>
+          </div>
+
+          <div class="hero__badge reveal">
+            <span class="hero__badge-label">
+              <a
+                href="https://x.com/MayankChomia"
+                target="_blank"
+                rel="noopener noreferrer"
+                >TWITTER</a
+              >
+            </span>
+          </div>
+
+          <div class="hero__badge reveal">
+            <span class="hero__badge-label">
+              <a
+                href="https://leetcode.com/u/H2Om0WKtyT/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >LEETCODE</a
+              >
+            </span>
+          </div>
+        </div>
+
+
+        
+
+      </section>
+
+      <!-- OVERVIEW SECTION (LIKE “VICE CITY, USA.” PART) -->
+      <section id="overview" class="section section--dark">
+        <div class="section__inner">
+          <h2 class="section__title reveal">MY life</h2>
+          <p class="section__lead reveal">
+            This portfolio represents my journey as a Data Science student learning how real systems are built.
+            From working with raw data to building APIs, dashboards, and machine-learning models, every project here reflects
+            hands-on experience — not theory alone.
+            It's a record of learning by doing, improving through mistakes, and turning data into decisions.
+            Still learning. Still building. Still moving forward.
+           
+          </p>
+        </div>
+      </section>
+
+      <!-- CHARACTERS SECTION (CARDS LIKE JASON / LUCIA / ETC.) -->
+      <section id="characters" class="section section--light">
+        <div class="section__inner">
+          <h2 class="section__title reveal">Projects</h2>
+          <p class="section__lead reveal">
+            welcome to my Projects.
+          </p>
+
+          <div class="card-grid">
+            <!-- CHARACTER 1 -->
+            <article class="card reveal">
+              <p class="card__eyebrow">A vechile analyser</p>
+              <h3 class="card__title">Fleetstat</h3>
+              <p class="card__body">
+                A data-driven system built to analyze vehicle trips, performance,
+                and fuel usage using real-world data. Designed to transform raw
+                vehicle logs into clear insights.
+              </p>
+              <p class="card__meta">
+                Built with Python, FastAPI, Streamlit, and machine learning —
+                focused on accuracy, clarity, and real-time decision support.
+              </p>
+              <a href="https://github.com/MYNKCHOMIYA/FleetStat" 
+              class="pill" target="_blank" 
+              rel="noopener noreferrer">
+                GITHUB (REPO)
+              </a>
+            </article>
+
+            <!-- CHARACTER 2 -->
+            <article class="card reveal">
+              <p class="card__eyebrow">Upcoming ....</p>
+              <h3 class="card__title">Project Two</h3>
+              <p class="card__body">
+                Something is cooking hard...
+              </p>
+              <p class="card__meta">
+                greater things take time
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- BAND STRIP (ONLY IN LEONIDA STYLE) -->
+      <section class="band band--highlight">
+        <div class="band__inner">
+          <p class="band__eyebrow">Earnings</p>
+          <h2 class="band__title">When the lights glow, your work speaks.</h2>
+          <p class="band__body">
+            I turn raw data and ideas into real systems—engineered with logic, built through discipline, and designed to scale.
+          </p>
+        </div>
+      </section>
+
+      <!-- DESTINATIONS SECTION (LIKE LEONIDA KEYS / GRASSRIVERS / ETC.) -->
+      <section id="destinations" class="section section--dark">
+        <div class="section__inner">
+          <h2 class="section__title reveal">Skills</h2>
+          <p class="section__lead reveal">
+            Turn each “skill” into  project, product, or case study.
+            here, it’s my skills.
+          </p>
+
+          <div class="card-grid">
+            <article class="card reveal">
+              <p class="card__eyebrow">• 01</p>
+              <h3 class="card__title">
+                <span class="skill-icon skill-icon--code"></span>
+                SYSTEM PROGRAMMING & DATA LOGICPROGRAMMING LANGAUGE
+              </h3>
+              <div class="card__body">
+                <ul class="skill-list">
+                  <li class="skill-pill">
+                    <i class="devicon-c-plain"></i>
+                    <span>C</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-cplusplus-plain"></i>
+                    <span>C++</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-r-plain"></i>
+                    <span>R</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+            <article class="card reveal">
+              <p class="card__eyebrow">• 02</p>
+              <h3 class="card__title">
+                <span class="skill-icon skill-icon--frontend"></span>
+                FRONTEND
+              </h3>
+              <div class="card__body">
+                <ul class="skill-list">
+                  <li class="skill-pill">
+                    <i class="devicon-html5-plain"></i>
+                    <span>HTML</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-css3-plain"></i>
+                    <span>CSS</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-python-plain"></i>
+                    <span>STREAMLIT</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card reveal">
+              <p class="card__eyebrow">• 03</p>
+              <h3 class="card__title">
+                <span class="skill-icon skill-icon--backend"></span>
+                BACKEND
+              </h3>
+              <div class="card__body">
+                <ul class="skill-list">
+                  <li class="skill-pill">
+                    <i class="devicon-sqlite-plain"></i>
+                    <span>SQLITE</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-mysql-plain"></i>
+                    <span>MYSQL</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card reveal">
+              <p class="card__eyebrow">• 04</p>
+              <h3 class="card__title">
+                <span class="skill-icon skill-icon--git"></span>
+                VERSION CONTROL
+              </h3>
+              <div class="card__body">
+                <ul class="skill-list">
+                  <li class="skill-pill">
+                    <i class="devicon-git-plain"></i>
+                    <span>GIT</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-github-original"></i>
+                    <span>GITHUB</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="card reveal">
+              <p class="card__eyebrow">• 05</p>
+              <h3 class="card__title">
+                <span class="skill-icon skill-icon--data"></span>
+                DATA SCIENCE
+              </h3>
+              <div class="card__body">
+                <ul class="skill-list">
+                  <li class="skill-pill">
+                    <i class="devicon-python-plain"></i>
+                    <span>PYTHON</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-numpy-original"></i>
+                    <span>NUMPY</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-pandas-original"></i>
+                    <span>PANDAS</span>
+                  </li>
+                  <li class="skill-pill">
+                    <span>🧹</span>
+                    <span>DATA CLEANING</span>
+                  </li>
+                  <li class="skill-pill">
+                    <i class="devicon-powerbi-plain"></i>
+                    <span>Power BI</span>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <!-- MINI TOUR LINKS (EXPLORE VICE CITY STYLE) -->
+          <div class="tour-grid">
+            <a href="#destinations" class="tour-card reveal">
+              <span class="tour-card__label">Explore</span>
+              <span class="tour-card__title">SKIILS</span>
+            </a>
+            <a href="#characters" class="tour-card reveal">
+              <span class="tour-card__label">Explore</span>
+              <span class="tour-card__title">PROJECTS</span>
+            </a>
+            <a href="#media" class="tour-card reveal">
+              <span class="tour-card__label">EXPLORE</span>
+              <span class="tour-card__title">MEDIA</span>
+            </a>
+            <a href="#contact" class="tour-card reveal">
+              <span class="tour-card__label">Connect</span>
+              <span class="tour-card__title">Work With Me</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- MEDIA SECTION (TRAILERS / VIDEOS PLACEHOLDERS) -->
+      <section id="media" class="section section--light">
+        <div class="section__inner">
+          <h2 class="section__title reveal">Media</h2>
+          <p class="section__lead reveal">
+            This section imitates the trailer areas from the
+            <a
+              href="https://www.rockstargames.com/VI"
+              target="_blank"
+              rel="noreferrer"
+              class="accent-link"
+              >official GTA VI page</a
+            >, but uses your own placeholders. Replace thumbnails and links with
+            your own videos later.
+          </p>
+
+          <div class="media-grid">
+            <!-- MAIN TRAILER STYLE BLOCK (SCROLL-REACTIVE VIDEO PLACEHOLDER) -->
+            <article class="media-card media-card--large reveal">
+              <div
+                class="media-card__thumbnail"
+                data-video-url="YOUR-MAIN-VIDEO-URL"
+              >
+                <!--
+                  Replace data-video-src with your own MP4 / WebM.
+                  Example: data-video-src="showcase.mp4"
+                -->
+                <video
+                  class="media-video"
+                  muted
+                  playsinline
+                  preload="metadata"
+                  data-scroll-video="true"
+                  data-video-src="YOUR-MAIN-VIDEO.mp4"
+                ></video>
+                <button class="media-card__play" type="button">
+                  <span>Play Showcase</span>
+                </button>
+              </div>
+              <div class="media-card__content">
+                <p class="media-card__eyebrow">Trailer • Main</p>
+                <h3 class="media-card__title">Main Showcase Trailer</h3>
+                <p class="media-card__body">
+                  A cinematic trailer‑style video that introduces your portfolio
+                  or flagship project. Swap in your own video link and thumbnail.
+                </p>
+              </div>
+            </article>
+
+            <!-- SECONDARY VIDEO -->
+            <article class="media-card reveal">
+              <div class="media-card__thumbnail" data-video-url="YOUR-SECOND-VIDEO-URL">
+                <button class="media-card__play" type="button">
+                  <span>Play Reel</span>
+                </button>
+              </div>
+              <div class="media-card__content">
+                <p class="media-card__eyebrow">Video • Breakdown</p>
+                <h3 class="media-card__title">Behind the Scenes</h3>
+                <p class="media-card__body">
+                  A breakdown or devlog‑style video where you walk through how
+                  you built your work.
+                </p>
+              </div>
+            </article>
+
+            <!-- THIRD VIDEO -->
+            <article class="media-card reveal">
+              <div class="media-card__thumbnail" data-video-url="YOUR-THIRD-VIDEO-URL">
+                <button class="media-card__play" type="button">
+                  <span>Play Clip</span>
+                </button>
+              </div>
+              <div class="media-card__content">
+                <p class="media-card__eyebrow">Video • Short</p>
+                <h3 class="media-card__title">Highlights & Moments</h3>
+                <p class="media-card__body">
+                  Quick highlight clips or short edits that show the best parts
+                  of your work.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <!-- CODING ACTIVITY (GITHUB + LEETCODE) -->
+          <div
+            class="activity reveal"
+            data-github-user="MYNKCHOMIYA"
+            data-leetcode-user="H2Om0WKtyT"
+          >
+            <h3 class="section__subtitle">Coding Activity</h3>
+            <p class="section__lead">
+              Live GitHub and LeetCode activity — commits, streaks, and problem
+              submissions — rendered directly on this page.
+            </p>
+
+            <div class="activity-grid">
+              <!-- GITHUB -->
+              <article class="activity-card activity-card--github interactive">
+                <div class="activity-card__top">
+                  <div>
+                    <p class="activity-card__eyebrow">GitHub Activity</p>
+                    <h4 class="activity-card__title">Daily Commits & Streak</h4>
+                  </div>
+                  <div class="activity-tabs" role="tablist" aria-label="GitHub tabs">
+                    <button
+                      class="activity-tab is-active"
+                      type="button"
+                      data-activity="github"
+                      data-view="contrib"
+                    >
+                      Heatmap
+                    </button>
+                    <button
+                      class="activity-tab"
+                      type="button"
+                      data-activity="github"
+                      data-view="streak"
+                    >
+                      Streak
+                    </button>
+                  </div>
+                </div>
+
+                <div class="activity-card__body">
+                  <a
+                    class="activity-link"
+                    href="https://github.com/MYNKCHOMIYA"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Open GitHub</a
+                  >
+                  <div class="activity-media">
+                    <img
+                      class="activity-img"
+                      alt="GitHub contribution heatmap"
+                      loading="lazy"
+                      data-activity-img="github"
+                      data-view="contrib"
+                    />
+                    <img
+                      class="activity-img is-hidden"
+                      alt="GitHub streak stats"
+                      loading="lazy"
+                      data-activity-img="github"
+                      data-view="streak"
+                    />
+                  </div>
+                  <p class="activity-legend">
+                    <span class="dot dot--github"></span>
+                    Each square is a day. Darker green = more commits that day.
+                    Switch tabs to see your streak numbers.
+                  </p>
+                </div>
+              </article>
+
+              <!-- LEETCODE -->
+              <article class="activity-card activity-card--leetcode interactive">
+                <div class="activity-card__top">
+                  <div>
+                    <p class="activity-card__eyebrow">LeetCode Activity</p>
+                    <h4 class="activity-card__title">Daily Submissions & Stats</h4>
+                  </div>
+                  <div class="activity-tabs" role="tablist" aria-label="LeetCode tabs">
+                    <button
+                      class="activity-tab is-active"
+                      type="button"
+                      data-activity="leetcode"
+                      data-view="card"
+                    >
+                      Stats
+                    </button>
+                    <button
+                      class="activity-tab"
+                      type="button"
+                      data-activity="leetcode"
+                      data-view="heatmap"
+                    >
+                      Heatmap
+                    </button>
+                  </div>
+                </div>
+
+                <div class="activity-card__body">
+                  <a
+                    class="activity-link"
+                    href="https://leetcode.com/u/H2Om0WKtyT/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Open LeetCode</a
+                  >
+                  <div class="activity-media">
+                    <img
+                      class="activity-img"
+                      alt="LeetCode stats card"
+                      loading="lazy"
+                      data-activity-img="leetcode"
+                      data-view="card"
+                    />
+                    <img
+                      class="activity-img is-hidden"
+                      alt="LeetCode heatmap"
+                      loading="lazy"
+                      data-activity-img="leetcode"
+                      data-view="heatmap"
+                    />
+                  </div>
+                  <p class="activity-legend">
+                    <span class="dot dot--leetcode"></span>
+                    Bars and colors show how many problems you solved and how
+                    active you were across days and difficulties.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT / CTA SECTION -->
+      <section id="contact" class="section section--dark">
+        <div class="section__inner section__inner--center">
+          <h2 class="section__title reveal">Stay in Touch</h2>
+          <p class="section__lead reveal">
+           wanna work with me?
+          </p>
+          <div class="contact-details reveal">
+            <p><strong>Email:</strong> mayankchomia@gmail.com</p>
+            <p><strong>Location:</strong> JAIPUR(RAJ.), IND(+91)</p>
+            <p>
+              <strong>Social:</strong>
+              <BR>
+              ·
+              <a href="https://github.com/MYNKCHOMIYA" class="accent-link">GitHub</a> <BR>·
+              <a href="https://www.linkedin.com/in/mynk-chomiya/" class="accent-link">LinkedIn</a><BR>·
+                <a href="https://x.com/MayankChomia"
+                target="_blank"
+                rel="noopener noreferrer" class="accent-link">TWITTER</a> 
+                
+            </p>
+          </div>
+          <a href="mailto:mayankchomia@gmail.com" class="btn btn--primary btn--wide reveal"
+            >Contact Me</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        © <span id="year"></span> Mayank Kumar
+      </p>
+    </footer>
+
+    <script src="main.js"></script>
+  </body>
+</html>
