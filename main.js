@@ -1,14 +1,48 @@
-// Simple enhancements to mimic a modern landing page:
-// - Scroll reveal animations
-// - Fake video play handlers (you can replace with real players later)
+// Clean portfolio JavaScript - Activity widgets properly configured
 
-// YEAR IN FOOTER
+// PWA Registration
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+
+// Mobile Navigation
+const nav = document.querySelector(".nav");
+const navToggle = document.querySelector(".nav__toggle");
+const navLinks = document.getElementById("nav-links");
+
+if (nav && navToggle && navLinks) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = nav.classList.toggle("is-open");
+    document.body.classList.toggle("nav-open", isOpen);
+    navToggle.setAttribute("aria-expanded", isOpen);
+    navToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+  });
+
+  function closeNav() {
+    nav.classList.remove("is-open");
+    document.body.classList.remove("nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+    navToggle.setAttribute("aria-label", "Open menu");
+  }
+
+  navLinks.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", closeNav);
+  });
+
+  navLinks.addEventListener("click", (e) => {
+    if (e.target === navLinks) closeNav();
+  });
+}
+
+// Footer Year
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
 
-// CURSOR "LIGHT" THAT AFFECTS THE ENVIRONMENT
+// Cursor Effect
 (() => {
   let x = window.innerWidth / 2;
   let y = window.innerHeight / 2;
@@ -36,7 +70,7 @@ if (yearEl) {
   set();
 })();
 
-// SCROLL REVEAL
+// Scroll Reveal
 const revealElements = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
@@ -49,99 +83,15 @@ if ("IntersectionObserver" in window) {
         }
       });
     },
-    {
-      threshold: 0.2,
-    }
+    { threshold: 0.2 }
   );
 
   revealElements.forEach((el) => observer.observe(el));
 } else {
-  // fallback: show everything
   revealElements.forEach((el) => el.classList.add("reveal--visible"));
 }
 
-// MEDIA CARDS (CLICK TO OPEN VIDEO LINK)
-document.querySelectorAll(".media-card__thumbnail").forEach((thumb) => {
-  thumb.addEventListener("click", () => {
-    const url = thumb.getAttribute("data-video-url") || "";
-    if (!url || url === "YOUR-MAIN-VIDEO-URL" || url.startsWith("YOUR-")) {
-      alert("Replace data-video-url with your real video link in the HTML.");
-    } else {
-      window.open(url, "_blank");
-    }
-  });
-});
-
-// SCROLL-REACTIVE VIDEO (SCRUBS AS YOU SCROLL MEDIA SECTION)
-const scrollVideos = Array.from(
-  document.querySelectorAll("video[data-scroll-video='true']")
-);
-
-scrollVideos.forEach((video) => {
-  const src = video.dataset.videoSrc;
-  if (src && !src.startsWith("YOUR-")) {
-    video.src = src;
-  }
-});
-
-if (scrollVideos.length) {
-  const onScroll = () => {
-    scrollVideos.forEach((video) => {
-      if (!video.duration || isNaN(video.duration)) return;
-
-      const rect = video.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-
-      // Only react when the video is in view
-      const visible =
-        rect.bottom > vh * 0.1 && rect.top < vh * 0.9 && rect.height > 0;
-      if (!visible) return;
-
-      const start = vh * 0.9;
-      const end = vh * 0.1 + rect.height;
-      const center = rect.top + rect.height / 2;
-      const progressRaw = 1 - (center - end) / (start - end);
-      const progress = Math.min(1, Math.max(0, progressRaw));
-
-      video.currentTime = progress * video.duration;
-    });
-  };
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll);
-
-  // Initial position
-  window.addEventListener("load", () => {
-    setTimeout(onScroll, 100);
-  });
-}
-
-// INTERACTIVE HOVER TILT + LIGHT FOLLOW FOR CARDS
-document.querySelectorAll(".interactive").forEach((card) => {
-  const onMove = (e) => {
-    const r = card.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width;
-    const py = (e.clientY - r.top) / r.height;
-
-    card.style.setProperty("--mx", `${px * 100}%`);
-    card.style.setProperty("--my", `${py * 100}%`);
-
-    const ry = (px - 0.5) * 8; // deg
-    const rx = (0.5 - py) * 8; // deg
-    card.style.setProperty("--rx", `${rx}deg`);
-    card.style.setProperty("--ry", `${ry}deg`);
-  };
-
-  const onLeave = () => {
-    card.style.setProperty("--rx", `0deg`);
-    card.style.setProperty("--ry", `0deg`);
-  };
-
-  card.addEventListener("pointermove", onMove);
-  card.addEventListener("pointerleave", onLeave);
-});
-
-// ACTIVITY WIDGETS (GITHUB + LEETCODE)
+// ============= ACTIVITY WIDGETS =============
 (() => {
   const root = document.querySelector(".activity");
   if (!root) return;
@@ -149,14 +99,15 @@ document.querySelectorAll(".interactive").forEach((card) => {
   const ghUser = root.getAttribute("data-github-user") || "";
   const lcUser = root.getAttribute("data-leetcode-user") || "";
 
-  // Fill image URLs (public widgets). These are images/SVGs, so no API keys needed.
-  // If you change usernames in HTML, these update automatically.
+  // GitHub Images
   const ghContrib = root.querySelector(
     "img[data-activity-img='github'][data-view='contrib']"
   );
   const ghStreak = root.querySelector(
     "img[data-activity-img='github'][data-view='streak']"
   );
+
+  // LeetCode Images
   const lcCard = root.querySelector(
     "img[data-activity-img='leetcode'][data-view='card']"
   );
@@ -164,42 +115,42 @@ document.querySelectorAll(".interactive").forEach((card) => {
     "img[data-activity-img='leetcode'][data-view='heatmap']"
   );
 
+  // Set GitHub URLs
   if (ghContrib && ghUser) {
-    // Contribution chart as SVG
-    ghContrib.src = `https://ghchart.rshah.org/${encodeURIComponent(
-      "2ea44f"
-    )}/${encodeURIComponent(ghUser)}`;
+    ghContrib.src = `https://ghchart.rshah.org/2ea44f/${encodeURIComponent(ghUser)}`;
   }
+
   if (ghStreak && ghUser) {
     ghStreak.src = `https://github-readme-streak-stats.herokuapp.com/?user=${encodeURIComponent(
       ghUser
-    )}&theme=github-dark&hide_border=true`;
+    )}&theme=dark&hide_border=true&background=05030A&ring=FF3EA5&fire=FFD34F&currStreakLabel=F7F3FF&sideLabels=F7F3FF&currStreakNum=FF3EA5&dates=A39BB8`;
   }
+
+  // Set LeetCode URLs
   if (lcCard && lcUser) {
     lcCard.src = `https://leetcard.jacoblin.cool/${encodeURIComponent(
       lcUser
-    )}?theme=dark&border=0&font=Karla`;
+    )}?theme=dark&font=Karla&ext=contest&border=0`;
   }
+
   if (lcHeat && lcUser) {
     lcHeat.src = `https://leetcode-stats-six.vercel.app/api?username=${encodeURIComponent(
       lcUser
-    )}&theme=dark&hide_border=true`;
+    )}&theme=dark`;
   }
 
-  // Tab switching
+  // Tab Switching
   root.querySelectorAll(".activity-tab").forEach((btn) => {
     btn.addEventListener("click", () => {
       const activity = btn.getAttribute("data-activity");
       const view = btn.getAttribute("data-view");
       if (!activity || !view) return;
 
-      // toggle active tab inside same tablist
       const tablist = btn.closest(".activity-tabs");
       tablist?.querySelectorAll(".activity-tab").forEach((b) => {
         b.classList.toggle("is-active", b === btn);
       });
 
-      // show matching image, hide others for that activity
       root
         .querySelectorAll(`img[data-activity-img='${activity}']`)
         .forEach((img) => {
@@ -210,3 +161,84 @@ document.querySelectorAll(".interactive").forEach((card) => {
   });
 })();
 
+// ============= EXPERIENCE — TIMELINE LINE REVEAL + CERTIFICATE MODAL =============
+(function () {
+  const timeline = document.querySelector(".timeline");
+  if (timeline && "IntersectionObserver" in window) {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            timeline.classList.add("is-visible");
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    obs.observe(timeline);
+  }
+
+  const modal = document.getElementById("cert-modal");
+  const certCards = document.querySelectorAll(".cert-card[data-cert-title]");
+  if (!modal) return;
+
+  const titleEl = modal.querySelector("#cert-modal-title");
+  const orgEl = modal.querySelector(".cert-modal__org");
+  const dateEl = modal.querySelector(".cert-modal__date");
+  const descEl = modal.querySelector(".cert-modal__desc");
+  const linkEl = modal.querySelector(".cert-modal__link");
+  const imgWrap = modal.querySelector(".cert-modal__img-wrap");
+  const closeBtn = modal.querySelector(".cert-modal__close");
+  const backdrop = modal.querySelector(".cert-modal__backdrop");
+
+  function openCertModal(card) {
+    const title = card.getAttribute("data-cert-title") || "";
+    const org = card.getAttribute("data-cert-org") || "";
+    const date = card.getAttribute("data-cert-date") || "";
+    const desc = card.getAttribute("data-cert-desc") || "";
+    const url = card.getAttribute("data-cert-url") || "#";
+
+    if (titleEl) titleEl.textContent = title;
+    if (orgEl) orgEl.textContent = org;
+    if (dateEl) dateEl.textContent = date;
+    if (descEl) descEl.textContent = desc;
+    if (linkEl) {
+      linkEl.href = url;
+      linkEl.style.display = url && url !== "#" ? "inline-flex" : "none";
+    }
+    imgWrap.innerHTML = "";
+    const imgUrl = card.getAttribute("data-cert-img");
+    if (imgUrl) {
+      const img = document.createElement("img");
+      img.src = imgUrl;
+      img.alt = title;
+      img.loading = "lazy";
+      imgWrap.appendChild(img);
+    }
+
+    modal.hidden = false;
+    modal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeBtn?.focus();
+  }
+
+  function closeCertModal() {
+    modal.classList.remove("is-open");
+    modal.hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  certCards.forEach((card) => {
+    card.addEventListener("click", () => openCertModal(card));
+  });
+
+  closeBtn?.addEventListener("click", closeCertModal);
+  backdrop?.addEventListener("click", closeCertModal);
+
+  modal.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) {
+      closeCertModal();
+    }
+  });
+})();

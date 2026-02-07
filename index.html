@@ -2,17 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#ff3ea5" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>MAYANK KUMAR CHOMIYA</title>
-
-    <!--
-      SIMPLE, EDITABLE PORTFOLIO
-      - Change colors: see the :root section in style.css
-      - Change text: just edit the content inside each section below
-    -->
-
+    <link rel="manifest" href="manifest.json" />
     <link rel="stylesheet" href="style.css" />
-    <!-- Devicon icons for tech logos -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
@@ -24,9 +21,15 @@
       <div class="nav__logo">
         <a href="#hero">MAYANK KUMAR</a>
       </div>
-      <nav class="nav__links">
+      <button type="button" class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+      </button>
+      <nav class="nav__links" id="nav-links">
         <a href="#hero">Overview</a>
         <a href="#characters">Projects</a>
+        <a href="#experience">Experience</a>
         <a href="#destinations">SKILLS</a>
         <a href="#media">Media</a>
         <a href="#contact">Contact</a>
@@ -34,7 +37,7 @@
     </header>
 
     <main>
-      <!-- HERO SECTION • INSPIRED BY GTA VI LANDING -->
+      <!-- HERO SECTION -->
       <section id="hero" class="hero">
         <div class="hero__main">
           <div class="hero__content reveal">
@@ -64,7 +67,6 @@
             </p>
           </div>
 
-          <!-- PROFILE IMAGE: PLACE YOUR PHOTO AT assets/profile.jpg -->
           <div class="hero__profile reveal">
             <div class="hero__avatar-ring">
               <img
@@ -122,13 +124,9 @@
             </span>
           </div>
         </div>
-
-
-        
-
       </section>
 
-      <!-- OVERVIEW SECTION (LIKE “VICE CITY, USA.” PART) -->
+      <!-- OVERVIEW SECTION -->
       <section id="overview" class="section section--dark">
         <div class="section__inner">
           <h2 class="section__title reveal">MY life</h2>
@@ -152,7 +150,6 @@
           </p>
 
           <div class="card-grid">
-            <!-- CHARACTER 1 -->
             <article class="card reveal">
               <p class="card__eyebrow">A vechile analyser</p>
               <h3 class="card__title">Fleetstat</h3>
@@ -172,7 +169,6 @@
               </a>
             </article>
 
-            <!-- CHARACTER 2 -->
             <article class="card reveal">
               <p class="card__eyebrow">Upcoming ....</p>
               <h3 class="card__title">Project Two</h3>
@@ -187,7 +183,7 @@
         </div>
       </section>
 
-      <!-- BAND STRIP (ONLY IN LEONIDA STYLE) -->
+      <!-- BAND STRIP -->
       <section class="band band--highlight">
         <div class="band__inner">
           <p class="band__eyebrow">Earnings</p>
@@ -198,22 +194,135 @@
         </div>
       </section>
 
-      <!-- DESTINATIONS SECTION (LIKE LEONIDA KEYS / GRASSRIVERS / ETC.) -->
+      <!-- EXPERIENCE SECTION (TIMELINE + CERTIFICATES) -->
+      <section id="experience" class="section section--light experience">
+        <div class="section__inner">
+          <h2 class="section__title reveal">Experience</h2>
+          <p class="section__lead reveal">
+            My journey so far — roles, learning, and certificates. Click any item to explore.
+          </p>
+
+          <div class="timeline">
+            <div class="timeline__line" aria-hidden="true"></div>
+
+            <article class="timeline__item reveal" data-year="2025">
+              <div class="timeline__dot"></div>
+              <div class="timeline__card">
+                <p class="timeline__eyebrow">Present</p>
+                <h3 class="timeline__title">Building & Learning</h3>
+                <p class="timeline__meta">Portfolio</p>
+                <p class="timeline__body">
+                  Just to make my porfolio including my HTML and CSS skill into it.
+                </p>
+                <div class="timeline__tags">
+                  <span class="timeline__tag">HTML</span>
+                  <span class="timeline__tag">CSS</span>
+                  <span class="timeline__tag">JAVASCRIPT</span>
+                  
+                </div>
+              </div>
+            </article>
+
+            <article class="timeline__item reveal" data-year="2024">
+              <div class="timeline__dot"></div>
+              <div class="timeline__card">
+                <p class="timeline__eyebrow">Project of  Summer Intership (2025)</p>
+                <h3 class="timeline__title">FleetStat — Vehicle Analytics</h3>
+                <p class="timeline__meta">Data-driven vehicle trip & fuel analysis</p>
+                <p class="timeline__body">
+                  This project shows the skills i learned duting the Summer Intership which is done in 2025 from coplur.
+                  In this intership i learned about python and data science.
+                  Built a system to analyze vehicle trips, performance, and fuel usage with Python, FastAPI, Streamlit, and ML for real-time insights.
+                </p>
+                <div class="timeline__tags">
+                  <span class="timeline__tag">Python</span>
+                  <span class="timeline__tag">Streamlit</span>
+                  <span class="timeline__tag">Sqlite</span>
+                  <span class="timeline__tag">FastAPI</span>
+                  <span class="timeline__tag">Data Cleaning</span>
+                  <span class="timeline__tag">PANDAS</span>
+                  <span class="timeline__tag">NUMPY</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="timeline__item reveal" data-year="2023">
+              <div class="timeline__dot"></div>
+              <div class="timeline__card">
+                <p class="timeline__eyebrow">Education</p>
+                <h3 class="timeline__title">B.Tech — Computer Science (Data Science)(2023-2027)</h3>
+                <p class="timeline__meta">Bachelor of Technology</p>
+                <p class="timeline__body">
+                  This is my Bechlor Degree of 4 years persued from SKIT JAIPUR.
+                  Focus on data science, system programming, and building real-world applications. Learning by doing.
+                </p>
+                <div class="timeline__tags">
+                  <span class="timeline__tag">C / C++</span>
+                  <span class="timeline__tag">MySQL</span>
+                  <span class="timeline__tag">Data Science</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <h3 class="section__subtitle reveal">Certificates</h3>
+          <p class="section__lead reveal">
+            Certifications and courses that back the experience.
+          </p>
+          <div class="cert-grid">
+            <button type="button" class="cert-card reveal" data-cert-title="Certificate Name" data-cert-org="Issuer" data-cert-date="2024" data-cert-desc="Description of the certificate." data-cert-url="" aria-label="View certificate">
+              <div class="cert-card__icon">🏆</div>
+              <div class="cert-card__content">
+                <p class="cert-card__eyebrow">Certificate</p>
+                <h4 class="cert-card__title">Add Your Certificate</h4>
+                <p class="cert-card__meta">Issuer · Year</p>
+              </div>
+              <span class="cert-card__action">View</span>
+            </button>
+            <button type="button" class="cert-card reveal" data-cert-title="Another Certificate" data-cert-org="Issuer" data-cert-date="2023" data-cert-desc="Another certification description." data-cert-url="" aria-label="View certificate">
+              <div class="cert-card__icon">📜</div>
+              <div class="cert-card__content">
+                <p class="cert-card__eyebrow">Certificate</p>
+                <h4 class="cert-card__title">Add More Certificates</h4>
+                <p class="cert-card__meta">Issuer · Year</p>
+              </div>
+              <span class="cert-card__action">View</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- CERTIFICATE MODAL -->
+      <div id="cert-modal" class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="cert-modal-title" hidden>
+        <div class="cert-modal__backdrop"></div>
+        <div class="cert-modal__box">
+          <button type="button" class="cert-modal__close" aria-label="Close">×</button>
+          <h2 id="cert-modal-title" class="cert-modal__title"></h2>
+          <p class="cert-modal__org"></p>
+          <p class="cert-modal__date"></p>
+          <p class="cert-modal__desc"></p>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="cert-modal__link btn btn--primary">Open Certificate</a>
+          <div class="cert-modal__img-wrap"></div>
+        </div>
+      </div>
+
+      <!-- DESTINATIONS SECTION (SKILLS) -->
       <section id="destinations" class="section section--dark">
         <div class="section__inner">
           <h2 class="section__title reveal">Skills</h2>
           <p class="section__lead reveal">
-            Turn each “skill” into  project, product, or case study.
-            here, it’s my skills.
+            Turn each "skill" into  project, product, or case study.
+            here, it's my skills.
           </p>
 
           <div class="card-grid">
             <article class="card reveal">
               <p class="card__eyebrow">• 01</p>
               <h3 class="card__title">
-                <span class=" <skill-icon skill-icon--code >"></span>
-                PROGRAMMING LANGAUGE
+                <span class="skill-icon">&lt;/&gt;</span>
+                SYSTEM PROGRAMMING
               </h3>
+
               <div class="card__body">
                 <ul class="skill-list">
                   <li class="skill-pill">
@@ -328,11 +437,14 @@
             </article>
           </div>
 
-          <!-- MINI TOUR LINKS (EXPLORE VICE CITY STYLE) -->
           <div class="tour-grid">
+            <a href="#experience" class="tour-card reveal">
+              <span class="tour-card__label">Explore</span>
+              <span class="tour-card__title">EXPERIENCE</span>
+            </a>
             <a href="#destinations" class="tour-card reveal">
               <span class="tour-card__label">Explore</span>
-              <span class="tour-card__title">SKIILS</span>
+              <span class="tour-card__title">SKILLS</span>
             </a>
             <a href="#characters" class="tour-card reveal">
               <span class="tour-card__label">Explore</span>
@@ -350,118 +462,85 @@
         </div>
       </section>
 
-      <!-- MEDIA SECTION (TRAILERS / VIDEOS PLACEHOLDERS) -->
+      <!-- MEDIA SECTION (WITH CV) -->
       <section id="media" class="section section--light">
         <div class="section__inner">
           <h2 class="section__title reveal">Media</h2>
           <p class="section__lead reveal">
-            This section imitates the trailer areas from the
-            <a
-              href="https://www.rockstargames.com/VI"
-              target="_blank"
-              rel="noreferrer"
-              class="accent-link"
-              >official GTA VI page</a
-            >, but uses your own placeholders. Replace thumbnails and links with
-            your own videos later.
+            My CV and coding activity dashboard.
           </p>
 
           <div class="media-grid">
-            <!-- MAIN TRAILER STYLE BLOCK (SCROLL-REACTIVE VIDEO PLACEHOLDER) -->
-            <article class="media-card media-card--large reveal">
-              <div
-                class="media-card__thumbnail"
-                data-video-url="YOUR-MAIN-VIDEO-URL"
-              >
-                <!--
-                  Replace data-video-src with your own MP4 / WebM.
-                  Example: data-video-src="showcase.mp4"
-                -->
-                <video
-                  class="media-video"
-                  muted
-                  playsinline
-                  preload="metadata"
-                  data-scroll-video="true"
-                  data-video-src="YOUR-MAIN-VIDEO.mp4"
-                ></video>
-                <button class="media-card__play" type="button">
-                  <span>Play Showcase</span>
-                </button>
+            <!-- CV DOWNLOAD CARD -->
+            <article class="media-card reveal">
+              <div class="media-card__thumbnail" style="background: linear-gradient(135deg, #ffd34f, #ff3ea5); cursor: pointer;" onclick="window.open('ASSESTS/mayank.pdf', '_blank')">
+                <div style="font-size: 4rem; color: rgba(5, 3, 10, 0.8);">📄</div>
               </div>
               <div class="media-card__content">
-                <p class="media-card__eyebrow">Trailer • Main</p>
-                <h3 class="media-card__title">Main Showcase Trailer</h3>
+                <p class="media-card__eyebrow">Document • Resume</p>
+                <h3 class="media-card__title">Download My CV</h3>
                 <p class="media-card__body">
-                  A cinematic trailer‑style video that introduces your portfolio
-                  or flagship project. Swap in your own video link and thumbnail.
+                  Complete resume with work experience, projects, skills, and education.
                 </p>
               </div>
             </article>
 
-            <!-- SECONDARY VIDEO -->
+            <!-- PROFILE PHOTO -->
             <article class="media-card reveal">
-              <div class="media-card__thumbnail" data-video-url="YOUR-SECOND-VIDEO-URL">
-                <button class="media-card__play" type="button">
-                  <span>Play Reel</span>
-                </button>
+              <div class="media-card__thumbnail">
+                <img src="ASSESTS/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.9;">
               </div>
               <div class="media-card__content">
-                <p class="media-card__eyebrow">Video • Breakdown</p>
-                <h3 class="media-card__title">Behind the Scenes</h3>
+                <p class="media-card__eyebrow">Image • Profile</p>
+                <h3 class="media-card__title">Professional Photo</h3>
                 <p class="media-card__body">
-                  A breakdown or devlog‑style video where you walk through how
-                  you built your work.
+                  Portfolio headshot for professional use.
                 </p>
               </div>
             </article>
 
-            <!-- THIRD VIDEO -->
+            <!-- GITHUB PROFILE -->
             <article class="media-card reveal">
-              <div class="media-card__thumbnail" data-video-url="YOUR-THIRD-VIDEO-URL">
-                <button class="media-card__play" type="button">
-                  <span>Play Clip</span>
-                </button>
+              <div class="media-card__thumbnail" style="background: linear-gradient(135deg, #2ea44f, #1a7f37); cursor: pointer;" onclick="window.open('https://github.com/MYNKCHOMIYA', '_blank')">
+                <div style="font-size: 4rem; color: rgba(255, 255, 255, 0.9);">⚡</div>
               </div>
               <div class="media-card__content">
-                <p class="media-card__eyebrow">Video • Short</p>
-                <h3 class="media-card__title">Highlights & Moments</h3>
+                <p class="media-card__eyebrow">Platform • GitHub</p>
+                <h3 class="media-card__title">GitHub Profile</h3>
                 <p class="media-card__body">
-                  Quick highlight clips or short edits that show the best parts
-                  of your work.
+                  View all repositories and contributions.
                 </p>
               </div>
             </article>
           </div>
 
-          <!-- CODING ACTIVITY (GITHUB + LEETCODE) -->
+          <!-- CODING ACTIVITY WIDGETS -->
           <div
             class="activity reveal"
             data-github-user="MYNKCHOMIYA"
             data-leetcode-user="H2Om0WKtyT"
           >
-            <h3 class="section__subtitle">Coding Activity</h3>
+            <h3 class="section__subtitle">Coding Activity Dashboard</h3>
             <p class="section__lead">
-              Live GitHub and LeetCode activity — commits, streaks, and problem
-              submissions — rendered directly on this page.
+              Live GitHub and LeetCode activity — commits, streaks, and problem submissions.
             </p>
 
             <div class="activity-grid">
-              <!-- GITHUB -->
-              <article class="activity-card activity-card--github interactive">
+              <!-- GITHUB ACTIVITY -->
+              <article class="activity-card activity-card--github">
                 <div class="activity-card__top">
                   <div>
                     <p class="activity-card__eyebrow">GitHub Activity</p>
                     <h4 class="activity-card__title">Daily Commits & Streak</h4>
                   </div>
-                  <div class="activity-tabs" role="tablist" aria-label="GitHub tabs">
+                  <div class="activity-tabs">
                     <button
                       class="activity-tab is-active"
                       type="button"
                       data-activity="github"
                       data-view="contrib"
                     >
-                      Heatmap
+                      Contributions
                     </button>
                     <button
                       class="activity-tab"
@@ -469,7 +548,7 @@
                       data-activity="github"
                       data-view="streak"
                     >
-                      Streak
+                      Streak Stats
                     </button>
                   </div>
                 </div>
@@ -480,7 +559,7 @@
                     href="https://github.com/MYNKCHOMIYA"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >Open GitHub</a
+                    >View GitHub Profile</a
                   >
                   <div class="activity-media">
                     <img
@@ -498,48 +577,27 @@
                       data-view="streak"
                     />
                   </div>
-                  <p class="activity-legend">
-                    <span class="dot dot--github"></span>
-                    Each square is a day. Darker green = more commits that day.
-                    Switch tabs to see your streak numbers.
+                  <p class="activity-legend activity-legend--github">
+                    Each square represents a day. Darker green = more commits. Switch tabs to see streak statistics.
                   </p>
                 </div>
               </article>
 
-              <!-- LEETCODE -->
-              <article class="activity-card activity-card--leetcode interactive">
+              <!-- LEETCODE ACTIVITY -->
+              <article class="activity-card activity-card--leetcode">
                 <div class="activity-card__top">
                   <div>
                     <p class="activity-card__eyebrow">LeetCode Activity</p>
-                    <h4 class="activity-card__title">Daily Submissions & Stats</h4>
-                  </div>
-                  <div class="activity-tabs" role="tablist" aria-label="LeetCode tabs">
-                    <button
-                      class="activity-tab is-active"
-                      type="button"
-                      data-activity="leetcode"
-                      data-view="card"
-                    >
-                      Stats
-                    </button>
-                    <button
-                      class="activity-tab"
-                      type="button"
-                      data-activity="leetcode"
-                      data-view="heatmap"
-                    >
-                      Heatmap
-                    </button>
+                    <h4 class="activity-card__title">Problem Solving Stats</h4>
                   </div>
                 </div>
-
                 <div class="activity-card__body">
                   <a
                     class="activity-link"
                     href="https://leetcode.com/u/H2Om0WKtyT/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >Open LeetCode</a
+                    >View LeetCode Profile</a
                   >
                   <div class="activity-media">
                     <img
@@ -557,10 +615,8 @@
                       data-view="heatmap"
                     />
                   </div>
-                  <p class="activity-legend">
-                    <span class="dot dot--leetcode"></span>
-                    Bars and colors show how many problems you solved and how
-                    active you were across days and difficulties.
+                  <p class="activity-legend activity-legend--leetcode">
+                    Problem statistics across Easy, Medium, and Hard difficulties. Heatmap shows daily submission activity.
                   </p>
                 </div>
               </article>
@@ -569,7 +625,7 @@
         </div>
       </section>
 
-      <!-- CONTACT / CTA SECTION -->
+      <!-- CONTACT SECTION -->
       <section id="contact" class="section section--dark">
         <div class="section__inner section__inner--center">
           <h2 class="section__title reveal">Stay in Touch</h2>
