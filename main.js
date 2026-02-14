@@ -532,7 +532,7 @@ if (yearEl) {
 // ============= PARALLAX TILT EFFECT ON CARDS =============
 (() => {
   const tiltElements = document.querySelectorAll(
-    ".card, .activity-card, .media-card, .tweets-card, .projects-dash-card"
+    ".card, .activity-card, .tweets-card, .projects-dash-card"
   );
   if (!tiltElements.length) return;
 
@@ -568,7 +568,7 @@ if (yearEl) {
 // ============= RIPPLE CLICK EFFECT =============
 (() => {
   const rippleTargets = document.querySelectorAll(
-    ".card, .activity-card, .media-card, .tour-card, .cert-card, .btn, .hero__badge, .tweets-card, .projects-dash-card, .project-mini, .tweet-embed"
+    ".card, .activity-card, .tour-card, .cert-card, .btn, .hero__badge, .tweets-card, .projects-dash-card, .project-mini, .tweet-embed"
   );
 
   rippleTargets.forEach((el) => {
@@ -738,7 +738,7 @@ if (yearEl) {
 (() => {
   // Add incremental delay to sibling .reveal elements in the same parent
   const groups = document.querySelectorAll(
-    ".card-grid, .dashboard-grid, .media-grid, .tour-grid, .cert-grid, .activity-grid, .hero__badges"
+    ".card-grid, .dashboard-grid, .tour-grid, .cert-grid, .activity-grid, .hero__badges"
   );
 
   groups.forEach((group) => {

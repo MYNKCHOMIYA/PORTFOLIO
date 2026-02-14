@@ -1118,139 +1118,7 @@ main {
   transform: scaleX(1);
 }
 
-/* MEDIA SECTION */
 
-.media-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 1.5rem;
-}
-
-@media (max-width: 1024px) {
-  .media-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .media-card--large {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 720px) {
-  .media-grid {
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-
-  .media-card__content {
-    padding: 1rem;
-  }
-
-  .media-card__title {
-    font-size: 0.95rem;
-  }
-
-  .media-card__body {
-    font-size: 0.82rem;
-  }
-}
-
-.media-card {
-  position: relative;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-soft);
-  background: radial-gradient(circle at top left, #251044, #080415 55%);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.7);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-
-.media-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
-}
-
-.media-card__thumbnail {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  background-image: linear-gradient(135deg, #ff3ea5, #37b7ff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.media-card__thumbnail::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(circle at top left, #ffffff44, transparent);
-  mix-blend-mode: screen;
-  opacity: 0.4;
-}
-
-.media-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.6;
-}
-
-.media-card__play {
-  position: relative;
-  z-index: 1;
-  border: none;
-  border-radius: 999px;
-  padding: 0.7rem 1.4rem;
-  min-height: 44px;
-  background: rgba(5, 3, 10, 0.85);
-  color: var(--text-main);
-  font-size: 0.8rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.media-card__play::before {
-  content: "";
-  width: 0;
-  height: 0;
-  border-left: 8px solid var(--accent-pink);
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
-}
-
-.media-card__content {
-  padding: 1.1rem 1.2rem 1.3rem;
-}
-
-.media-card__eyebrow {
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent-gold);
-  margin-bottom: 0.35rem;
-}
-
-.media-card__title {
-  margin: 0 0 0.4rem;
-  font-size: 1rem;
-}
-
-.media-card__body {
-  margin: 0;
-  font-size: 0.86rem;
-  color: var(--text-muted);
-}
 
 /* TOUR GRID (EXPLORE LINKS) */
 
@@ -2557,7 +2425,6 @@ body.is-pointer #cursor-spotlight {
 
 .card,
 .activity-card,
-.media-card,
 .tour-card,
 .cert-card {
   transition:
@@ -2567,7 +2434,6 @@ body.is-pointer #cursor-spotlight {
 }
 
 .card:hover,
-.media-card:hover,
 .cert-card:hover {
   transform: translateY(-6px) scale(1.03);
   box-shadow:
@@ -2586,8 +2452,7 @@ body.is-pointer #cursor-spotlight {
 
 /* Animated gradient border on hover via ::after overlay */
 .card::after,
-.activity-card::after,
-.media-card::after {
+.activity-card::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -2605,8 +2470,7 @@ body.is-pointer #cursor-spotlight {
 }
 
 .card:hover::after,
-.activity-card:hover::after,
-.media-card:hover::after {
+.activity-card:hover::after {
   opacity: 1;
 }
 
