@@ -124,10 +124,16 @@ if ("IntersectionObserver" in window) {
       if (repoEl) repoEl.textContent = profileData.public_repos;
       if (followerEl) followerEl.textContent = profileData.followers;
 
-      // 2. Fetch Events for Heatmap (Last ~300 events)
-      const eventsRes = await fetch(`https://api.github.com/users/${ghUser}/events?per_page=100`);
-      if (!eventsRes.ok) throw new Error("GitHub Events Failed");
-      const eventsData = await eventsRes.json();
+      // 2. Fetch Events for Heatmap (multiple pages for better 60-day coverage)
+      const allEvents = [];
+      for (let page = 1; page <= 3; page++) {
+        const eventsRes = await fetch(`https://api.github.com/users/${ghUser}/events?per_page=100&page=${page}`);
+        if (!eventsRes.ok) throw new Error("GitHub Events Failed");
+        const pageData = await eventsRes.json();
+        if (pageData.length === 0) break;
+        allEvents.push(...pageData);
+      }
+      const eventsData = allEvents;
 
       // Process Data for Heatmap
       const activityMap = {}; // "YYYY-MM-DD": { count: 0, repos: Set() }
@@ -139,8 +145,13 @@ if ("IntersectionObserver" in window) {
             activityMap[date] = { count: 0, repos: new Set(), events: [] };
           }
 
-          // Increment count (weight Pushes more?)
-          const weight = event.type === "PushEvent" ? event.payload.size : 1;
+          // Increment count: PushEvent = commits (size or commits.length), others = 1
+          let weight = 1;
+          if (event.type === "PushEvent" && event.payload) {
+            const commits = event.payload.commits;
+            const size = event.payload.size;
+            weight = (commits && commits.length) || (typeof size === "number" ? size : 1) || 1;
+          }
           activityMap[date].count += weight;
           activityMap[date].repos.add(event.repo.name);
           activityMap[date].events.push(event);
@@ -159,7 +170,11 @@ if ("IntersectionObserver" in window) {
   function renderHeatmap(activityMap) {
     const heatmapEl = document.getElementById("gh-heatmap");
     const detailsEl = document.getElementById("gh-details");
-    if (!heatmapEl || !detailsEl) return;
+    if (!heatmapEl || !detailsEl) {
+      console.error("GitHub heatmap elements not found!");
+      return;
+    }
+    console.log("Rendering GitHub heatmap with activity data:", Object.keys(activityMap).length, "days with activity");
 
     heatmapEl.innerHTML = "";
 
@@ -172,22 +187,32 @@ if ("IntersectionObserver" in window) {
       days.push(d.toISOString().split("T")[0]);
     }
 
+
+
     days.forEach(dateStr => {
       const dayData = activityMap[dateStr] || { count: 0, repos: new Set(), events: [] };
       const count = dayData.count;
 
-      // Determine Level (0-4)
+      // Determine Level (0-4) - GitHub-style frequency colors
       let level = 0;
-      if (count > 0) level = 1;
-      if (count > 3) level = 2;
-      if (count > 6) level = 3;
-      if (count > 10) level = 4;
+      if (count >= 1) level = 1;
+      if (count >= 2) level = 2;
+      if (count >= 4) level = 3;
+      if (count >= 7) level = 4;
 
       const dayEl = document.createElement("div");
       dayEl.className = "gh-day";
       dayEl.setAttribute("data-date", dateStr);
       dayEl.setAttribute("data-count", count);
       dayEl.setAttribute("data-level", level);
+
+      // Apply inline background so frequency colors always show (CSS fallback)
+      const levelColors = ["rgba(255,255,255,0.1)", "#0e4429", "#006d32", "#26a641", "#39d353"];
+      dayEl.style.backgroundColor = levelColors[level];
+      dayEl.style.background = levelColors[level];
+      if (level === 4) {
+        dayEl.style.boxShadow = "0 0 10px rgba(57, 211, 83, 0.5)";
+      }
 
       // Click Interaction
       dayEl.addEventListener("click", () => {
@@ -219,71 +244,136 @@ if ("IntersectionObserver" in window) {
 
       heatmapEl.appendChild(dayEl);
     });
+
+    console.log("GitHub heatmap rendered:", days.length, "squares created");
+    // Log a sample square to verify attributes and styles
+    const sampleSquare = heatmapEl.querySelector('.gh-day[data-level="1"], .gh-day[data-level="2"], .gh-day[data-level="3"], .gh-day[data-level="4"]');
+    if (sampleSquare) {
+      console.log("Sample active square:", {
+        level: sampleSquare.getAttribute('data-level'),
+        count: sampleSquare.getAttribute('data-count'),
+        inlineStyle: sampleSquare.style.backgroundColor,
+        computedStyle: window.getComputedStyle(sampleSquare).backgroundColor
+      });
+    }
   }
 
-  // --- LEETCODE STATS ---
+  // --- LEETCODE STATS (LeetCode-style interactive) ---
   async function fetchLeetCodeStats() {
     try {
-      // Using a proxy because LeetCode does not have a public CORS-enabled API
       const res = await fetch(`https://leetcode-stats-api.herokuapp.com/${lcUser}`);
       if (!res.ok) throw new Error("LeetCode API Error");
       const data = await res.json();
 
       if (data.status === "error") throw new Error(data.message);
 
-      // Update Total
-      const totalEl = document.getElementById("lc-total");
-      const circleEl = document.getElementById("lc-circle");
+      const totalQ = data.totalQuestions || 3837;
+      const solved = data.totalSolved || 0;
+      const easyS = data.easySolved || 0;
+      const medS = data.mediumSolved || 0;
+      const hardS = data.hardSolved || 0;
+      const totalE = data.totalEasy || 925;
+      const totalM = data.totalMedium || 2005;
+      const totalH = data.totalHard || 907;
 
-      if (totalEl) {
-        animateValue(totalEl, 0, data.totalSolved, 1500);
+      const ratioEl = document.getElementById("lc-ratio");
+      const attemptingEl = document.getElementById("lc-attempting");
+
+      // SVG ring: Easy (teal), Medium (yellow), Hard (red) - stroke segments with dots
+      let pEasy = 0, pMedium = 0, pHard = 0, pTotal = 0;
+      if (solved > 0 && totalQ > 0) {
+        const actualPct = (solved / totalQ) * 100;
+        const minVisible = 18;
+        const scaledTotal = Math.max(actualPct, minVisible);
+        const easyFrac = easyS / solved;
+        const medFrac = medS / solved;
+        const hardFrac = hardS / solved;
+        pEasy = scaledTotal * easyFrac;
+        pMedium = scaledTotal * medFrac;
+        pHard = scaledTotal * hardFrac;
+        pTotal = scaledTotal;
       }
 
-      // Update Circle Ring (Assuming ~2500 total problems on site for calculation, or just use percentage of arbitrary max)
-      // Actually data.totalQuestions is available
-      if (circleEl && data.totalQuestions) {
-        const percentage = (data.totalSolved / data.totalQuestions) * 100;
-        // set timeout to trigger CSS animation
-        setTimeout(() => {
-          circleEl.style.setProperty("--p", Math.round(percentage));
-        }, 100);
+      renderLeetCodeRing(pEasy, pMedium, pHard, pTotal);
+
+      // Animated ratio (solved/total)
+      if (ratioEl) {
+        animateRatio(ratioEl, 0, solved, 0, totalQ, 1400);
       }
 
-      // Update Bars
-      updateBar("easy", data.easySolved, data.totalEasy);
-      updateBar("medium", data.mediumSolved, data.totalMedium);
-      updateBar("hard", data.hardSolved, data.totalHard);
+      // Attempting (LeetCode shows problems in progress; API typically doesn't provide)
+      if (attemptingEl) {
+        attemptingEl.textContent = "0 Attempting";
+      }
+
+      // Staggered reveal for breakdown items
+      document.querySelectorAll(".lc-stat-item").forEach(el => el.classList.add("lc-stat-item--visible"));
+
+      // Bars with X/Total format and animated fill
+      updateBar("easy", easyS, totalE, 0.3);
+      updateBar("medium", medS, totalM, 0.5);
+      updateBar("hard", hardS, totalH, 0.7);
 
     } catch (err) {
       console.error("LeetCode Fetch Error:", err);
-      // Fallback or error state
     }
   }
 
-  function updateBar(difficulty, solved, total) {
+  function renderLeetCodeRing(pEasy, pMedium, pHard, pTotal) {
+    const circum = 2 * Math.PI * 42;
+    const easyLen = (pEasy / 100) * circum;
+    const medLen = (pMedium / 100) * circum;
+    const hardLen = (pHard / 100) * circum;
+
+    const segEasy = document.getElementById("lc-seg-easy");
+    const segMed = document.getElementById("lc-seg-medium");
+    const segHard = document.getElementById("lc-seg-hard");
+
+    if (segEasy) {
+      segEasy.style.strokeDasharray = `${easyLen} ${circum + 100}`;
+      segEasy.style.strokeDashoffset = "0";
+    }
+    if (segMed) {
+      segMed.style.strokeDasharray = `${medLen} ${circum + 100}`;
+      segMed.style.strokeDashoffset = `-${easyLen}`;
+    }
+    if (segHard) {
+      segHard.style.strokeDasharray = `${hardLen} ${circum + 100}`;
+      segHard.style.strokeDashoffset = `-${easyLen + medLen}`;
+    }
+  }
+
+  function updateBar(difficulty, solved, total, delay = 0) {
     const valEl = document.getElementById(`lc-${difficulty}-val`);
     const barEl = document.getElementById(`lc-${difficulty}-bar`);
 
-    if (valEl) valEl.textContent = solved;
+    if (valEl) {
+      valEl.textContent = `${solved}/${total}`;
+      valEl.style.opacity = "0";
+      valEl.offsetHeight; // reflow
+      valEl.style.transition = "opacity 0.4s ease-out";
+      setTimeout(() => { valEl.style.opacity = "1"; }, 400 + delay * 400);
+    }
     if (barEl) {
-      const pct = (solved / total) * 100;
+      const pct = total > 0 ? (solved / total) * 100 : 0;
       setTimeout(() => {
         barEl.style.width = `${pct}%`;
-      }, 300);
+      }, 150 + delay * 300);
     }
   }
 
-  function animateValue(obj, start, end, duration) {
+  function animateRatio(el, startSolved, endSolved, startTotal, endTotal, duration) {
     let startTimestamp = null;
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      obj.innerHTML = Math.floor(progress * (end - start) + start);
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
+      const t = Math.min((timestamp - startTimestamp) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 2); // ease-out quad
+      const s = Math.floor(eased * (endSolved - startSolved) + startSolved);
+      const tot = Math.floor(eased * (endTotal - startTotal) + startTotal);
+      el.textContent = `${s}/${tot}`;
+      if (t < 1) requestAnimationFrame(step);
     };
-    window.requestAnimationFrame(step);
+    requestAnimationFrame(step);
   }
 
   fetchGitHubStats();

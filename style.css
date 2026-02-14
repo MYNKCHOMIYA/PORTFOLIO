@@ -45,6 +45,33 @@ body {
   overflow-x: hidden;
 }
 
+/* Custom Scrollbar - Website Theme */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-pink) rgba(255, 255, 255, 0.05);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(5, 3, 10, 0.8);
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+  border-radius: 10px;
+  border: 2px solid rgba(5, 3, 10, 0.9);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
+  box-shadow: 0 0 8px rgba(255, 62, 165, 0.4);
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -1375,14 +1402,15 @@ main {
 }
 
 .gh-day {
-  width: 12px;
-  height: 12px;
-  border-radius: 2px;
-  background: rgba(255, 255, 255, 0.05);
-  /* Level 0 */
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  /* Level 0 - default, NO !important here so levels can override */
   cursor: pointer;
   position: relative;
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .gh-day:hover {
@@ -1417,22 +1445,73 @@ main {
   opacity: 1;
 }
 
-/* Heatmap Levels */
+/* Heatmap Levels - GitHub contribution frequency colors */
+.gh-day[data-level="0"] {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
 .gh-day[data-level="1"] {
-  background: rgba(46, 164, 79, 0.3);
+  background-color: #0e4429 !important;
+  background: #0e4429 !important;
 }
 
 .gh-day[data-level="2"] {
-  background: rgba(46, 164, 79, 0.5);
+  background-color: #006d32 !important;
+  background: #006d32 !important;
 }
 
 .gh-day[data-level="3"] {
-  background: rgba(46, 164, 79, 0.7);
+  background-color: #26a641 !important;
+  background: #26a641 !important;
 }
 
 .gh-day[data-level="4"] {
-  background: #2ea44f;
-  box-shadow: 0 0 8px rgba(46, 164, 79, 0.4);
+  background-color: #39d353 !important;
+  background: #39d353 !important;
+  box-shadow: 0 0 10px rgba(57, 211, 83, 0.5) !important;
+}
+
+/* Contribution frequency legend (Less → More) */
+.gh-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.gh-legend-label {
+  margin-right: 4px;
+}
+
+.gh-legend-sq {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.gh-legend-sq[data-level="0"] {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.gh-legend-sq[data-level="1"] {
+  background-color: #0e4429;
+}
+
+.gh-legend-sq[data-level="2"] {
+  background-color: #006d32;
+}
+
+.gh-legend-sq[data-level="3"] {
+  background-color: #26a641;
+}
+
+.gh-legend-sq[data-level="4"] {
+  background-color: #39d353;
 }
 
 /* DETAILS PANEL */
@@ -1447,6 +1526,37 @@ main {
   color: var(--text-muted);
   font-style: italic;
   font-size: 0.8rem;
+}
+
+/* Custom scrollbar for activity details */
+.gh-details>div,
+.gh-details {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-pink) rgba(255, 255, 255, 0.05);
+}
+
+.gh-details>div::-webkit-scrollbar,
+.gh-details::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.gh-details>div::-webkit-scrollbar-track,
+.gh-details::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.gh-details>div::-webkit-scrollbar-thumb,
+.gh-details::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+  border-radius: 10px;
+  border: 2px solid rgba(5, 3, 10, 0.9);
+}
+
+.gh-details>div::-webkit-scrollbar-thumb:hover,
+.gh-details::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-gold), var(--accent-pink));
 }
 
 .gh-repo-item {
@@ -1482,7 +1592,7 @@ main {
   display: none;
 }
 
-/* LEETCODE STYLES */
+/* LEETCODE STYLES - Interactive like LeetCode */
 .leetcode-stats-container {
   display: flex;
   align-items: center;
@@ -1497,49 +1607,137 @@ main {
   }
 }
 
+/* SVG LeetCode-style ring: stroke segments with dots at ends */
 .leetcode-circle-wrap {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   flex-shrink: 0;
+  cursor: default;
 }
 
-.leetcode-circle {
+.lc-ring-container {
+  position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: conic-gradient(var(--c) calc(var(--p) * 1%), rgba(255, 255, 255, 0.1) 0);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 20px rgba(255, 161, 22, 0.1);
-  transition: --p 1s ease-out;
-  /* Property animation requires @property register in modern browsers, generic fallback works */
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.leetcode-circle-wrap:hover .lc-ring-container {
+  transform: scale(1.08);
+}
+
+.leetcode-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.lc-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 6;
+  transition: stroke 0.3s ease;
+}
+
+.lc-segment {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 0 300;
+  stroke-dashoffset: 0;
+  transition: stroke-dasharray 1.2s cubic-bezier(0.4, 0, 0.2, 1), stroke-width 0.3s ease, filter 0.3s ease;
+}
+
+/* LeetCode colors + neon glow */
+.lc-segment--easy {
+  stroke: #00b8a3;
+  filter: drop-shadow(0 0 6px rgba(0, 184, 163, 0.7));
+}
+
+.lc-segment--medium {
+  stroke: #ffc01e;
+  filter: drop-shadow(0 0 6px rgba(255, 192, 30, 0.7));
+}
+
+.lc-segment--hard {
+  stroke: #ef4743;
+  filter: drop-shadow(0 0 6px rgba(239, 71, 67, 0.7));
+}
+
+/* Hover: stronger neon, stroke thickens */
+.leetcode-circle-wrap:hover .lc-segment--easy {
+  stroke-width: 7;
+  filter: drop-shadow(0 0 10px rgba(0, 184, 163, 0.9)) drop-shadow(0 0 20px rgba(0, 184, 163, 0.4));
+}
+
+.leetcode-circle-wrap:hover .lc-segment--medium {
+  stroke-width: 7;
+  filter: drop-shadow(0 0 10px rgba(255, 192, 30, 0.9)) drop-shadow(0 0 20px rgba(255, 192, 30, 0.4));
+}
+
+.leetcode-circle-wrap:hover .lc-segment--hard {
+  stroke-width: 7;
+  filter: drop-shadow(0 0 10px rgba(239, 71, 67, 0.9)) drop-shadow(0 0 20px rgba(239, 71, 67, 0.4));
+}
+
+.leetcode-circle-wrap:hover .lc-track {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.leetcode-circle-wrap:hover .leetcode-ratio {
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+.lc-stat-item:hover .lc-bar {
+  filter: brightness(1.15);
 }
 
 .leetcode-circle-inner {
-  width: 88%;
-  height: 88%;
+  position: relative;
+  z-index: 2;
+  width: 72%;
+  height: 72%;
+  min-width: 70px;
+  min-height: 70px;
   background: #0f081e;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.15rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-.leetcode-total {
-  font-size: 1.5rem;
+.leetcode-ratio {
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-main);
-  line-height: 1;
+  line-height: 1.1;
 }
 
-.leetcode-label {
-  font-size: 0.65rem;
-  text-transform: uppercase;
+.leetcode-solved {
+  font-size: 0.7rem;
+  color: #00b8a3;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lc-check {
+  color: #00b8a3;
+}
+
+.leetcode-attempting {
+  font-size: 0.6rem;
   color: var(--text-muted);
-  margin-top: 0.1rem;
 }
 
 .leetcode-breakdown {
@@ -1547,7 +1745,7 @@ main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 0.9rem;
 }
 
 .lc-stat-item {
@@ -1555,18 +1753,49 @@ main {
   align-items: center;
   gap: 0.8rem;
   font-size: 0.8rem;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.lc-stat-item.lc-stat-item--visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.lc-stat-item[data-difficulty="easy"].lc-stat-item--visible {
+  transition-delay: 0.2s;
+}
+
+.lc-stat-item[data-difficulty="medium"].lc-stat-item--visible {
+  transition-delay: 0.4s;
+}
+
+.lc-stat-item[data-difficulty="hard"].lc-stat-item--visible {
+  transition-delay: 0.6s;
 }
 
 .lc-label {
-  width: 50px;
-  color: var(--text-muted);
-  font-weight: 500;
+  width: 48px;
+  font-weight: 600;
+}
+
+.lc-label--easy {
+  color: #00b8a3;
+}
+
+.lc-label--medium {
+  color: #ffc01e;
+}
+
+.lc-label--hard {
+  color: #ef4743;
 }
 
 .lc-bar-bg {
   flex: 1;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.1);
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -1575,13 +1804,31 @@ main {
   height: 100%;
   border-radius: 999px;
   transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 0;
+}
+
+.lc-bar--easy {
+  background: #00b8a3;
+}
+
+.lc-bar--medium {
+  background: #ffc01e;
+}
+
+.lc-bar--hard {
+  background: #ef4743;
+}
+
+.lc-bar {
+  transition-delay: 0.3s;
 }
 
 .lc-value {
-  width: 30px;
+  width: 52px;
   text-align: right;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
+  font-size: 0.85rem;
 }
 
 

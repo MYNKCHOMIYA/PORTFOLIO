@@ -574,6 +574,17 @@
                     <!-- JS will populate: 60 squares with tooltips -->
                   </div>
 
+                  <!-- Contribution Frequency Legend (GitHub-style) -->
+                  <div class="gh-legend" aria-label="Contribution frequency scale">
+                    <span class="gh-legend-label">Less</span>
+                    <span class="gh-legend-sq" data-level="0" title="No contributions"></span>
+                    <span class="gh-legend-sq" data-level="1" title="1 contribution"></span>
+                    <span class="gh-legend-sq" data-level="2" title="2–3 contributions"></span>
+                    <span class="gh-legend-sq" data-level="3" title="4–6 contributions"></span>
+                    <span class="gh-legend-sq" data-level="4" title="7+ contributions"></span>
+                    <span class="gh-legend-label">More</span>
+                  </div>
+
                   <!-- Detail Panel (OnClick) -->
                   <div class="gh-details" id="gh-details">
                     <p class="gh-details-placeholder">Click a square to view activity details.</p>
@@ -599,38 +610,61 @@
                   rel="noopener noreferrer">View LeetCode Profile</a>
 
                 <div class="leetcode-stats-container">
-                  <!-- Circular Progress for Total -->
+                  <!-- LeetCode-style SVG ring: stroke segments with dots, neon glow -->
                   <div class="leetcode-circle-wrap">
-                    <div class="leetcode-circle" id="lc-circle" style="--p: 0; --c: #ffa116;">
+                    <div class="lc-ring-container">
+                      <svg class="leetcode-svg" id="lc-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <filter id="lc-neon-easy" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="1" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                          </filter>
+                          <filter id="lc-neon-medium" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="1" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                          </filter>
+                          <filter id="lc-neon-hard" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="1" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                          </filter>
+                        </defs>
+                        <circle class="lc-track" cx="50" cy="50" r="42"/>
+                        <circle class="lc-segment lc-segment--easy" id="lc-seg-easy" cx="50" cy="50" r="42"/>
+                        <circle class="lc-segment lc-segment--medium" id="lc-seg-medium" cx="50" cy="50" r="42"/>
+                        <circle class="lc-segment lc-segment--hard" id="lc-seg-hard" cx="50" cy="50" r="42"/>
+                      </svg>
                       <div class="leetcode-circle-inner">
-                        <span class="leetcode-total" id="lc-total">0</span>
-                        <span class="leetcode-label">Solved</span>
+                        <span class="leetcode-ratio" id="lc-ratio">0/0</span>
+                        <span class="leetcode-solved">
+                          <span class="lc-check">✓</span> Solved
+                        </span>
+                        <span class="leetcode-attempting" id="lc-attempting">0 Attempting</span>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Breakdown -->
+                  <!-- Breakdown with X/Total format -->
                   <div class="leetcode-breakdown">
-                    <div class="lc-stat-item">
-                      <span class="lc-label">Easy</span>
+                    <div class="lc-stat-item" data-difficulty="easy">
+                      <span class="lc-label lc-label--easy">Easy</span>
                       <div class="lc-bar-bg">
-                        <div class="lc-bar" id="lc-easy-bar" style="width: 0%; background: #00b8a3;"></div>
+                        <div class="lc-bar lc-bar--easy" id="lc-easy-bar" style="width: 0%;"></div>
                       </div>
-                      <span class="lc-value" id="lc-easy-val">0</span>
+                      <span class="lc-value" id="lc-easy-val">0/0</span>
                     </div>
-                    <div class="lc-stat-item">
-                      <span class="lc-label">Medium</span>
+                    <div class="lc-stat-item" data-difficulty="medium">
+                      <span class="lc-label lc-label--medium">Med.</span>
                       <div class="lc-bar-bg">
-                        <div class="lc-bar" id="lc-medium-bar" style="width: 0%; background: #ffc01e;"></div>
+                        <div class="lc-bar lc-bar--medium" id="lc-medium-bar" style="width: 0%;"></div>
                       </div>
-                      <span class="lc-value" id="lc-medium-val">0</span>
+                      <span class="lc-value" id="lc-medium-val">0/0</span>
                     </div>
-                    <div class="lc-stat-item">
-                      <span class="lc-label">Hard</span>
+                    <div class="lc-stat-item" data-difficulty="hard">
+                      <span class="lc-label lc-label--hard">Hard</span>
                       <div class="lc-bar-bg">
-                        <div class="lc-bar" id="lc-hard-bar" style="width: 0%; background: #ef4743;"></div>
+                        <div class="lc-bar lc-bar--hard" id="lc-hard-bar" style="width: 0%;"></div>
                       </div>
-                      <span class="lc-value" id="lc-hard-val">0</span>
+                      <span class="lc-value" id="lc-hard-val">0/0</span>
                     </div>
                   </div>
                 </div>
