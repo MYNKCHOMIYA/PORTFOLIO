@@ -1,297 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#ff3ea5" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>MAYANK KUMAR CHOMIYA</title>
-    <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css" />
-    <!-- Vercel Speed Insights -->
-    <script>
-      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
-    <!-- Vercel Analytics -->
-    <script>
-      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ff3ea5" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>MAYANK KUMAR CHOMIYA - Data Science Portfolio</title>
+  <meta name="description"
+    content="Portfolio of Mayank Kumar Chomiya, a Data Science student and Developer specializing in Python, Machine Learning, and System Programming. Explore my projects and skills." />
+  <meta name="keywords"
+    content="Mayank Kumar, Data Science, Portfolio, Python, Machine Learning, Web Development, System Programming, SKIT Jaipur" />
+  <meta name="author" content="Mayank Kumar Chomiya" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mynkchomiya.github.io/" />
+  <meta property="og:title" content="Mayank Kumar - Data Science Portfolio" />
+  <meta property="og:description"
+    content="Building systems. Not just websites. Explore the projects and skills of Mayank Kumar." />
+  <meta property="og:image" content="assets/file_00000000916472079e59ba3a78b4bc3f.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://mynkchomiya.github.io/" />
+  <meta property="twitter:title" content="Mayank Kumar - Data Science Portfolio" />
+  <meta property="twitter:description"
+    content="Building systems. Not just websites. Explore the projects and skills of Mayank Kumar." />
+  <meta property="twitter:image" content="assets/file_00000000916472079e59ba3a78b4bc3f.png" />
+
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Vercel Speed Insights -->
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+  <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
-    />
-  </head>
-  <body>
-    <!-- TOP NAVBAR -->
-    <header class="nav" >
-      <div class="nav__logo">
-        <a href="#hero">MAYANK KUMAR</a>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+</head>
+
+<body>
+  <div id="cursor-spotlight"></div>
+  <!-- TOP NAVBAR -->
+  <header class="nav">
+    <div class="nav__logo">
+      <a href="#hero">MAYANK KUMAR</a>
+    </div>
+    <button type="button" class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+      <span class="nav__toggle-bar"></span>
+    </button>
+    <nav class="nav__links" id="nav-links">
+      <a href="#hero">Overview</a>
+      <a href="#Projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">SKILLS</a>
+      <a href="#media">Media</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero">
+      <div class="hero__main">
+        <div class="hero__content reveal">
+          <p class="hero__eyebrow">
+            Bachelor of Technology (B.Tech), Computer Science and Engineering
+            (Data Science )
+          </p>
+          <h1 class="hero__title">MAYANK KUMAR</h1>
+          <p class="hero__subtitle">
+            I am a <span id="typing-text" class="accent">Data Scientist</span><span class="cursor">|</span>
+          </p>
+
+          <div class="hero__platforms">
+            <a href="#skills" class="btn btn--ghost">FRONTEND</a>
+            <a href="#skills" class="btn btn--ghost">BACKEND</a>
+            <a href="#skills" class="btn btn--ghost">DATA SCIENCE</a>
+          </div>
+
+          <div class="hero__actions">
+            <a href="#media" class="btn btn--ghost">MEDIA</a>
+            <a href="#Projects" class="btn btn--ghost">PROJECTS</a>
+          </div>
+
+          <p class="hero__meta">
+            Scroll to explore the world, Projects, and skills of
+            <span class="accent">MY LIFE.</span>.
+          </p>
+        </div>
+
+        <div class="hero__profile reveal">
+          <div class="hero__avatar-ring">
+            <img src="assets/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar" class="hero__avatar"
+              width="300" height="300" fetchpriority="high" />
+          </div>
+        </div>
       </div>
-      <button type="button" class="nav__toggle" aria-label="Open menu" aria-expanded="false">
-        <span class="nav__toggle-bar"></span>
-        <span class="nav__toggle-bar"></span>
-        <span class="nav__toggle-bar"></span>
-      </button>
-      <nav class="nav__links" id="nav-links">
-        <a href="#hero">Overview</a>
-        <a href="#Projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">SKILLS</a>
-        <a href="#media">Media</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
 
-    <main>
-      <!-- HERO SECTION -->
-      <section id="hero" class="hero">
-        <div class="hero__main">
-          <div class="hero__content reveal">
-            <p class="hero__eyebrow">
-              Bachelor of Technology (B.Tech), Computer Science and Engineering
-              (Data Science )
+
+      <div class="hero__badges">
+        <div class="hero__badge reveal">
+          <span class="hero__badge-label">
+            <a href="https://github.com/MYNKCHOMIYA" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </span>
+        </div>
+
+        <div class="hero__badge reveal">
+          <span class="hero__badge-label">
+            <a href="https://www.linkedin.com/in/mynk-chomiya/" target="_blank" rel="noopener noreferrer">linkedin</a>
+          </span>
+        </div>
+
+        <div class="hero__badge reveal">
+          <span class="hero__badge-label">
+            <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer">TWITTER</a>
+          </span>
+        </div>
+
+        <div class="hero__badge reveal">
+          <span class="hero__badge-label">
+            <a href="https://leetcode.com/u/MYNK_CHOMIYA/" target="_blank" rel="noopener noreferrer">LEETCODE</a>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW SECTION -->
+    <section id="overview" class="section section--dark">
+      <div class="section__inner">
+        <h2 class="section__title reveal">MY life</h2>
+        <p class="section__lead reveal">
+          This portfolio represents my journey as a Data Science student learning how real systems are built.
+          From working with raw data to building APIs, dashboards, and machine-learning models, every project here
+          reflects
+          hands-on experience — not theory alone.
+          It's a record of learning by doing, improving through mistakes, and turning data into decisions.
+          Still learning. Still building. Still moving forward.
+
+        </p>
+      </div>
+    </section>
+
+    <!-- Projects SECTION (CARDS LIKE JASON / LUCIA / ETC.) -->
+    <section id="Projects" class="section section--light">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Projects</h2>
+        <p class="section__lead reveal">
+          welcome to my Projects.
+        </p>
+
+        <div class="card-grid">
+          <article class="card reveal">
+            <p class="card__eyebrow">A vehicle analyser</p>
+            <h3 class="card__title">Fleetstat</h3>
+            <p class="card__body">
+              A data-driven system built to analyze vehicle trips, performance,
+              and fuel usage using real-world data. Designed to transform raw
+              vehicle logs into clear insights.
             </p>
-            <h1 class="hero__title">MAYANK KUMAR</h1>
-            <p class="hero__subtitle">
-              Building systems. Not just websites.
+            <p class="card__meta">
+              Built with Python, FastAPI, Streamlit, and machine learning —
+              focused on accuracy, clarity, and real-time decision support.
             </p>
+            <a href="https://github.com/MYNKCHOMIYA/FleetStat" class="pill" target="_blank" rel="noopener noreferrer">
+              GITHUB (REPO)
+            </a>
+          </article>
 
-            <div class="hero__platforms">
-              <a href="#skills" class="btn btn--ghost">FRONTEND</a>
-              <a href="#skills" class="btn btn--ghost">BACKEND</a>
-              <a href="#skills" class="btn btn--ghost">DATA SCIENCE</a>
-            </div>
-
-            <div class="hero__actions">
-              <a href="#media" class="btn btn--primary">MEDIA</a>
-              <a href="#Projects" class="btn btn--ghost">PROJECTS</a>
-            </div>
-
-            <p class="hero__meta">
-              Scroll to explore the world, Projects, and skills of
-              <span class="accent">MY LIFE.</span>.
+          <article class="card reveal">
+            <p class="card__eyebrow">Upcoming ....</p>
+            <h3 class="card__title">Project Two</h3>
+            <p class="card__body">
+              Something is cooking hard...
             </p>
-          </div>
+            <p class="card__meta">
+              greater things take time
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-          <div class="hero__profile reveal">
-            <div class="hero__avatar-ring">
-              <img
-                src="ASSESTS/file_00000000916472079e59ba3a78b4bc3f.png"
-                alt="Mayank Kumar"
-                class="hero__avatar"
-              />
+    <!-- BAND STRIP -->
+    <section class="band band--highlight">
+      <div class="band__inner">
+        <p class="band__eyebrow">Earnings</p>
+        <h2 class="band__title">When the lights glow, your work speaks.</h2>
+        <p class="band__body">
+          I turn raw data and ideas into real systems—engineered with logic, built through discipline, and designed to
+          scale.
+        </p>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION (TIMELINE + CERTIFICATES) -->
+    <section id="experience" class="section section--light experience">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Experience</h2>
+        <p class="section__lead reveal">
+          My journey so far — roles, learning, and certificates. Click any item to explore.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline__line" aria-hidden="true"></div>
+
+          <article class="timeline__item reveal" data-year="2025">
+            <div class="timeline__dot"></div>
+            <div class="timeline__card">
+              <p class="timeline__eyebrow">Present</p>
+              <h3 class="timeline__title">Building & Learning</h3>
+              <p class="timeline__meta">Portfolio</p>
+              <p class="timeline__body">
+                Just to make my portfolio including my HTML and CSS skill into it.
+              </p>
+              <div class="timeline__tags">
+                <span class="timeline__tag">HTML</span>
+                <span class="timeline__tag">CSS</span>
+                <span class="timeline__tag">JAVASCRIPT</span>
+
+              </div>
             </div>
-          </div>
-        </div>
-        
+          </article>
 
-        <div class="hero__badges">
-          <div class="hero__badge reveal">
-            <span class="hero__badge-label">
-              <a
-                href="https://github.com/MYNKCHOMIYA"
-                target="_blank"
-                rel="noopener noreferrer"
-                >GitHub</a
-              >
-            </span>
-          </div>
-
-          <div class="hero__badge reveal">
-            <span class="hero__badge-label">
-              <a
-                href="https://www.linkedin.com/in/mynk-chomiya/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >linkedin</a
-              >
-            </span>
-          </div>
-
-          <div class="hero__badge reveal">
-            <span class="hero__badge-label">
-              <a
-                href="https://x.com/MayankChomia"
-                target="_blank"
-                rel="noopener noreferrer"
-                >TWITTER</a
-              >
-            </span>
-          </div>
-
-          <div class="hero__badge reveal">
-            <span class="hero__badge-label">
-              <a
-                href="https://leetcode.com/u/MYNK_CHOMIYA/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >LEETCODE</a
-              >
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <!-- OVERVIEW SECTION -->
-      <section id="overview" class="section section--dark">
-        <div class="section__inner">
-          <h2 class="section__title reveal">MY life</h2>
-          <p class="section__lead reveal">
-            This portfolio represents my journey as a Data Science student learning how real systems are built.
-            From working with raw data to building APIs, dashboards, and machine-learning models, every project here reflects
-            hands-on experience — not theory alone.
-            It's a record of learning by doing, improving through mistakes, and turning data into decisions.
-            Still learning. Still building. Still moving forward.
-           
-          </p>
-        </div>
-      </section>
-
-      <!-- Projects SECTION (CARDS LIKE JASON / LUCIA / ETC.) -->
-      <section id="Projects" class="section section--light">
-        <div class="section__inner">
-          <h2 class="section__title reveal">Projects</h2>
-          <p class="section__lead reveal">
-            welcome to my Projects.
-          </p>
-
-          <div class="card-grid">
-            <article class="card reveal">
-              <p class="card__eyebrow">A vechile analyser</p>
-              <h3 class="card__title">Fleetstat</h3>
-              <p class="card__body">
-                A data-driven system built to analyze vehicle trips, performance,
-                and fuel usage using real-world data. Designed to transform raw
-                vehicle logs into clear insights.
+          <article class="timeline__item reveal" data-year="2024">
+            <div class="timeline__dot"></div>
+            <div class="timeline__card">
+              <p class="timeline__eyebrow">Project of Summer Internship (2025)</p>
+              <h3 class="timeline__title">FleetStat — Vehicle Analytics</h3>
+              <p class="timeline__meta">Data-driven vehicle trip & fuel analysis</p>
+              <p class="timeline__body">
+                This project shows the skills i learned during the Summer Internship which is done in 2025 from coplur.
+                In this internship i learned about python and data science.
+                Built a system to analyze vehicle trips, performance, and fuel usage with Python, FastAPI, Streamlit,
+                and ML for real-time insights.
               </p>
-              <p class="card__meta">
-                Built with Python, FastAPI, Streamlit, and machine learning —
-                focused on accuracy, clarity, and real-time decision support.
-              </p>
-              <a href="https://github.com/MYNKCHOMIYA/FleetStat" 
-              class="pill" target="_blank" 
-              rel="noopener noreferrer">
-                GITHUB (REPO)
-              </a>
-            </article>
+              <div class="timeline__tags">
+                <span class="timeline__tag">Python</span>
+                <span class="timeline__tag">Streamlit</span>
+                <span class="timeline__tag">Sqlite</span>
+                <span class="timeline__tag">FastAPI</span>
+                <span class="timeline__tag">Data Cleaning</span>
+                <span class="timeline__tag">PANDAS</span>
+                <span class="timeline__tag">NUMPY</span>
+              </div>
+            </div>
+          </article>
 
-            <article class="card reveal">
-              <p class="card__eyebrow">Upcoming ....</p>
-              <h3 class="card__title">Project Two</h3>
-              <p class="card__body">
-                Something is cooking hard...
+          <article class="timeline__item reveal" data-year="2023">
+            <div class="timeline__dot"></div>
+            <div class="timeline__card">
+              <p class="timeline__eyebrow">Education</p>
+              <h3 class="timeline__title">B.Tech — Computer Science (Data Science)(2023-2027)</h3>
+              <p class="timeline__meta">Bachelor of Technology</p>
+              <p class="timeline__body">
+                This is my Bachelor's Degree of 4 years pursued from SKIT JAIPUR.
+                Focus on data science, system programming, and building real-world applications. Learning by doing.
               </p>
-              <p class="card__meta">
-                greater things take time
-              </p>
-            </article>
-          </div>
+              <div class="timeline__tags">
+                <span class="timeline__tag">C / C++</span>
+                <span class="timeline__tag">MySQL</span>
+                <span class="timeline__tag">Data Science</span>
+              </div>
+            </div>
+          </article>
         </div>
-      </section>
 
-      <!-- BAND STRIP -->
-      <section class="band band--highlight">
-        <div class="band__inner">
-          <p class="band__eyebrow">Earnings</p>
-          <h2 class="band__title">When the lights glow, your work speaks.</h2>
-          <p class="band__body">
-            I turn raw data and ideas into real systems—engineered with logic, built through discipline, and designed to scale.
-          </p>
-        </div>
-      </section>
-
-      <!-- EXPERIENCE SECTION (TIMELINE + CERTIFICATES) -->
-      <section id="experience" class="section section--light experience">
-        <div class="section__inner">
-          <h2 class="section__title reveal">Experience</h2>
-          <p class="section__lead reveal">
-            My journey so far — roles, learning, and certificates. Click any item to explore.
-          </p>
-
-          <div class="timeline">
-            <div class="timeline__line" aria-hidden="true"></div>
-
-            <article class="timeline__item reveal" data-year="2025">
-              <div class="timeline__dot"></div>
-              <div class="timeline__card">
-                <p class="timeline__eyebrow">Present</p>
-                <h3 class="timeline__title">Building & Learning</h3>
-                <p class="timeline__meta">Portfolio</p>
-                <p class="timeline__body">
-                  Just to make my porfolio including my HTML and CSS skill into it.
-                </p>
-                <div class="timeline__tags">
-                  <span class="timeline__tag">HTML</span>
-                  <span class="timeline__tag">CSS</span>
-                  <span class="timeline__tag">JAVASCRIPT</span>
-                  
-                </div>
-              </div>
-            </article>
-
-            <article class="timeline__item reveal" data-year="2024">
-              <div class="timeline__dot"></div>
-              <div class="timeline__card">
-                <p class="timeline__eyebrow">Project of  Summer Intership (2025)</p>
-                <h3 class="timeline__title">FleetStat — Vehicle Analytics</h3>
-                <p class="timeline__meta">Data-driven vehicle trip & fuel analysis</p>
-                <p class="timeline__body">
-                  This project shows the skills i learned duting the Summer Intership which is done in 2025 from coplur.
-                  In this intership i learned about python and data science.
-                  Built a system to analyze vehicle trips, performance, and fuel usage with Python, FastAPI, Streamlit, and ML for real-time insights.
-                </p>
-                <div class="timeline__tags">
-                  <span class="timeline__tag">Python</span>
-                  <span class="timeline__tag">Streamlit</span>
-                  <span class="timeline__tag">Sqlite</span>
-                  <span class="timeline__tag">FastAPI</span>
-                  <span class="timeline__tag">Data Cleaning</span>
-                  <span class="timeline__tag">PANDAS</span>
-                  <span class="timeline__tag">NUMPY</span>
-                </div>
-              </div>
-            </article>
-
-            <article class="timeline__item reveal" data-year="2023">
-              <div class="timeline__dot"></div>
-              <div class="timeline__card">
-                <p class="timeline__eyebrow">Education</p>
-                <h3 class="timeline__title">B.Tech — Computer Science (Data Science)(2023-2027)</h3>
-                <p class="timeline__meta">Bachelor of Technology</p>
-                <p class="timeline__body">
-                  This is my Bechlor Degree of 4 years persued from SKIT JAIPUR.
-                  Focus on data science, system programming, and building real-world applications. Learning by doing.
-                </p>
-                <div class="timeline__tags">
-                  <span class="timeline__tag">C / C++</span>
-                  <span class="timeline__tag">MySQL</span>
-                  <span class="timeline__tag">Data Science</span>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <h3 class="section__subtitle reveal">Certificates</h3>
-          <p class="section__lead reveal">
-            Certifications and courses that back the experience.
-          </p>
-          <div class="cert-grid">
-            <button type="button" class="cert-card reveal" data-cert-title="Summer Intership" data-cert-org="Coplur" data-cert-date="2025" data-cert-desc="SUMMER INTERSHIP (45 DAYS)(19 JUNE - 3 AUG)" data-cert-url="ASSESTS/20260209_183047.jpg.jpeg" aria-label="View certificate">
-              <div class="cert-card__icon">🏆</div>
-              <div class="cert-card__content">
-                <p class="cert-card__eyebrow">Certificate</p>
-                <h4 class="cert-card__title">Summer Intership</h4>
-                <p class="cert-card__meta">Coplur · 2025</p>
-              </div>
-              <span class="cert-card__action">View</span>
-            </button>
-            <!-- <button type="button" class="cert-card reveal" data-cert-title="Another Certificate" data-cert-org="Issuer" data-cert-date="2023" data-cert-desc="Another certification description." data-cert-url="" aria-label="View certificate">
+        <h3 class="section__subtitle reveal">Certificates</h3>
+        <p class="section__lead reveal">
+          Certifications and courses that back the experience.
+        </p>
+        <div class="cert-grid">
+          <button type="button" class="cert-card reveal" data-cert-title="Summer Internship" data-cert-org="Coplur"
+            data-cert-date="2025" data-cert-desc="SUMMER INTERNSHIP (45 DAYS)(19 JUNE - 3 AUG)"
+            data-cert-url="assets/20260209_183047.jpg.jpeg" aria-label="View certificate">
+            <div class="cert-card__icon">🏆</div>
+            <div class="cert-card__content">
+              <p class="cert-card__eyebrow">Certificate</p>
+              <h4 class="cert-card__title">Summer Internship</h4>
+              <p class="cert-card__meta">Coplur · 2025</p>
+            </div>
+            <span class="cert-card__action">View</span>
+          </button>
+          <!-- <button type="button" class="cert-card reveal" data-cert-title="Another Certificate" data-cert-org="Issuer" data-cert-date="2023" data-cert-desc="Another certification description." data-cert-url="" aria-label="View certificate">
               <div class="cert-card__icon">📜</div>
               <div class="cert-card__content">
                 <p class="cert-card__eyebrow">Certificate</p>
@@ -300,378 +302,378 @@
               </div>
               <span class="cert-card__action">View</span>
             </button> -->
-          </div>
-        </div>
-      </section>
-
-      <!-- CERTIFICATE MODAL -->
-      <div id="cert-modal" class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="cert-modal-title" hidden>
-        <div class="cert-modal__backdrop"></div>
-        <div class="cert-modal__box">
-          <button type="button" class="cert-modal__close" aria-label="Close">×</button>
-          <h2 id="cert-modal-title" class="cert-modal__title"></h2>
-          <p class="cert-modal__org"></p>
-          <p class="cert-modal__date"></p>
-          <p class="cert-modal__desc"></p>
-          <a href="#" target="_blank" rel="noopener noreferrer" class="cert-modal__link btn btn--primary">Open Certificate</a>
-          <div class="cert-modal__img-wrap"></div>
         </div>
       </div>
+    </section>
 
-      <!-- skills SECTION (SKILLS) -->
-      <section id="skills" class="section section--dark">
-        <div class="section__inner">
-          <h2 class="section__title reveal">Skills</h2>
-          <p class="section__lead reveal">
-            Turn each "skill" into  project, product, or case study.
-            here, it's my skills.
-          </p>
+    <!-- CERTIFICATE MODAL -->
+    <div id="cert-modal" class="cert-modal" role="dialog" aria-modal="true" aria-labelledby="cert-modal-title" hidden>
+      <div class="cert-modal__backdrop"></div>
+      <div class="cert-modal__box">
+        <button type="button" class="cert-modal__close" aria-label="Close">×</button>
+        <h2 id="cert-modal-title" class="cert-modal__title"></h2>
+        <p class="cert-modal__org"></p>
+        <p class="cert-modal__date"></p>
+        <p class="cert-modal__desc"></p>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="cert-modal__link btn btn--primary">Open
+          Certificate</a>
+        <div class="cert-modal__img-wrap"></div>
+      </div>
+    </div>
 
-          <div class="card-grid">
-            <article class="card reveal">
-              <p class="card__eyebrow">• 01</p>
-              <h3 class="card__title">
-                <span class="skill-icon">&lt;/&gt;</span>
-                SYSTEM PROGRAMMING
-              </h3>
+    <!-- skills SECTION (SKILLS) -->
+    <section id="skills" class="section section--dark">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Skills</h2>
+        <p class="section__lead reveal">
+          Turn each "skill" into project, product, or case study.
+          here, it's my skills.
+        </p>
 
-              <div class="card__body">
-                <ul class="skill-list">
-                  <li class="skill-pill">
-                    <i class="devicon-c-plain"></i>
-                    <span>C</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-cplusplus-plain"></i>
-                    <span>C++</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-r-plain"></i>
-                    <span>R</span>
-                  </li>
-                </ul>
-              </div>
-            </article>
-            <article class="card reveal">
-              <p class="card__eyebrow">• 02</p>
-              <h3 class="card__title">
-                <span class="skill-icon skill-icon--frontend"></span>
-                FRONTEND
-              </h3>
-              <div class="card__body">
-                <ul class="skill-list">
-                  <li class="skill-pill">
-                    <i class="devicon-html5-plain"></i>
-                    <span>HTML</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-css3-plain"></i>
-                    <span>CSS</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-python-plain"></i>
-                    <span>STREAMLIT</span>
-                  </li>
-                </ul>
-              </div>
-            </article>
+        <div class="card-grid">
+          <article class="card reveal">
+            <p class="card__eyebrow">• 01</p>
+            <h3 class="card__title">
+              <span class="skill-icon">&lt;/&gt;</span>
+              SYSTEM PROGRAMMING
+            </h3>
 
-            <article class="card reveal">
-              <p class="card__eyebrow">• 03</p>
-              <h3 class="card__title">
-                <span class="skill-icon skill-icon--backend"></span>
-                BACKEND
-              </h3>
-              <div class="card__body">
-                <ul class="skill-list">
-                  <li class="skill-pill">
-                    <i class="devicon-sqlite-plain"></i>
-                    <span>SQLITE</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-mysql-plain"></i>
-                    <span>MYSQL</span>
-                  </li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="card reveal">
-              <p class="card__eyebrow">• 04</p>
-              <h3 class="card__title">
-                <span class="skill-icon skill-icon--git"></span>
-                VERSION CONTROL
-              </h3>
-              <div class="card__body">
-                <ul class="skill-list">
-                  <li class="skill-pill">
-                    <i class="devicon-git-plain"></i>
-                    <span>GIT</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-github-original"></i>
-                    <span>GITHUB</span>
-                  </li>
-                </ul>
-              </div>
-            </article>
-
-            <article class="card reveal">
-              <p class="card__eyebrow">• 05</p>
-              <h3 class="card__title">
-                <span class="skill-icon skill-icon--data"></span>
-                DATA SCIENCE
-              </h3>
-              <div class="card__body">
-                <ul class="skill-list">
-                  <li class="skill-pill">
-                    <i class="devicon-python-plain"></i>
-                    <span>PYTHON</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-numpy-original"></i>
-                    <span>NUMPY</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-pandas-original"></i>
-                    <span>PANDAS</span>
-                  </li>
-                  <li class="skill-pill">
-                    <span>🧹</span>
-                    <span>DATA CLEANING</span>
-                  </li>
-                  <li class="skill-pill">
-                    <i class="devicon-powerbi-plain"></i>
-                    <span>Power BI</span>
-                  </li>
-                </ul>
-              </div>
-            </article>
-          </div>
-
-          <div class="tour-grid">
-            <a href="#experience" class="tour-card reveal">
-              <span class="tour-card__label">Explore</span>
-              <span class="tour-card__title">EXPERIENCE</span>
-            </a>
-            <a href="#skills" class="tour-card reveal">
-              <span class="tour-card__label">Explore</span>
-              <span class="tour-card__title">SKILLS</span>
-            </a>
-            <a href="#Projects" class="tour-card reveal">
-              <span class="tour-card__label">Explore</span>
-              <span class="tour-card__title">PROJECTS</span>
-            </a>
-            <a href="#media" class="tour-card reveal">
-              <span class="tour-card__label">EXPLORE</span>
-              <span class="tour-card__title">MEDIA</span>
-            </a>
-            <a href="#contact" class="tour-card reveal">
-              <span class="tour-card__label">Connect</span>
-              <span class="tour-card__title">Work With Me</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- MEDIA SECTION (WITH CV) -->
-      <section id="media" class="section section--light">
-        <div class="section__inner">
-          <h2 class="section__title reveal">Media</h2>
-          <p class="section__lead reveal">
-            My CV and coding activity dashboard.
-          </p>
-
-          <div class="media-grid">
-            <!-- CV DOWNLOAD CARD -->
-            <article class="media-card reveal">
-              <div class="media-card__thumbnail" style="background: linear-gradient(135deg, #ffd34f, #ff3ea5); cursor: pointer;" onclick="window.open('ASSESTS/mayank.pdf', '_blank')">
-                <div style="font-size: 4rem; color: rgba(5, 3, 10, 0.8);">📄</div>
-              </div>
-              <div class="media-card__content">
-                <p class="media-card__eyebrow">Document • Resume</p>
-                <h3 class="media-card__title">Download My CV</h3>
-                <p class="media-card__body">
-                  Complete resume with work experience, projects, skills, and education.
-                </p>
-              </div>
-            </article>
-
-            <!-- PROFILE PHOTO -->
-            <article class="media-card reveal">
-              <div class="media-card__thumbnail">
-                <img src="ASSESTS/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar" style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.9;">
-              </div>
-              <div class="media-card__content">
-                <p class="media-card__eyebrow">Image • Profile</p>
-                <h3 class="media-card__title">Professional Photo</h3>
-                <p class="media-card__body">
-                  Portfolio headshot for professional use.
-                </p>
-              </div>
-            </article>
-
-            <!-- GITHUB PROFILE -->
-            <article class="media-card reveal">
-              <div class="media-card__thumbnail" style="background: linear-gradient(135deg, #2ea44f, #1a7f37); cursor: pointer;" onclick="window.open('https://github.com/MYNKCHOMIYA', '_blank')">
-                <div style="font-size: 4rem; color: rgba(255, 255, 255, 0.9);">⚡</div>
-              </div>
-              <div class="media-card__content">
-                <p class="media-card__eyebrow">Platform • GitHub</p>
-                <h3 class="media-card__title">GitHub Profile</h3>
-                <p class="media-card__body">
-                  View all repositories and contributions.
-                </p>
-              </div>
-            </article>
-          </div>
-
-          <!-- CODING ACTIVITY WIDGETS -->
-          <div
-            class="activity reveal"
-            data-github-user="MYNKCHOMIYA"
-            data-leetcode-user="MYNK_CHOMIYA"
-          >
-            <h3 class="section__subtitle">Coding Activity Dashboard</h3>
-            <p class="section__lead">
-              Live GitHub and LeetCode activity — commits, streaks, and problem submissions.
-            </p>
-
-            <div class="activity-grid">
-              <!-- GITHUB ACTIVITY -->
-              <article class="activity-card activity-card--github">
-                <div class="activity-card__top">
-                  <div>
-                    <p class="activity-card__eyebrow">GitHub Activity</p>
-                    <h4 class="activity-card__title">Daily Commits & Streak</h4>
-                  </div>
-                  <div class="activity-tabs">
-                    <button
-                      class="activity-tab is-active"
-                      type="button"
-                      data-activity="github"
-                      data-view="contrib"
-                    >
-                      Contributions
-                    </button>
-                    <button
-                      class="activity-tab"
-                      type="button"
-                      data-activity="github"
-                      data-view="streak"
-                    >
-                      Streak Stats
-                    </button>
-                  </div>
-                </div>
-
-                <div class="activity-card__body">
-                  <a
-                    class="activity-link"
-                    href="https://github.com/MYNKCHOMIYA"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View GitHub Profile</a
-                  >
-                  <div class="activity-media">
-                    <img
-                      class="activity-img"
-                      alt="GitHub contribution heatmap"
-                      loading="lazy"
-                      data-activity-img="github"
-                      data-view="contrib"
-                    />
-                    <img
-                      class="activity-img is-hidden"
-                      alt="GitHub streak stats"
-                      loading="lazy"
-                      data-activity-img="github"
-                      data-view="streak"
-                    />
-                  </div>
-                  <p class="activity-legend activity-legend--github">
-                    Each square represents a day. Darker green = more commits. Switch tabs to see streak statistics.
-                  </p>
-                </div>
-              </article>
-
-              <!-- LEETCODE ACTIVITY -->
-              <article class="activity-card activity-card--leetcode">
-                <div class="activity-card__top">
-                  <div>
-                    <p class="activity-card__eyebrow">LeetCode Activity</p>
-                    <h4 class="activity-card__title">Problem Solving Stats</h4>
-                  </div>
-                </div>
-                <div class="activity-card__body">
-                  <a
-                    class="activity-link"
-                    href="https://leetcode.com/u/MYNK_CHOMIYA/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >View LeetCode Profile</a
-                  >
-                  <div class="activity-media">
-                    <img
-                      class="activity-img"
-                      alt="LeetCode stats card"
-                      loading="lazy"
-                      data-activity-img="leetcode"
-                      data-view="card"
-                    />
-                    <img
-                      class="activity-img is-hidden"
-                      alt="LeetCode heatmap"
-                      loading="lazy"
-                      data-activity-img="leetcode"
-                      data-view="heatmap"
-                    />
-                  </div>
-                  <p class="activity-legend activity-legend--leetcode">
-                    Problem statistics across Easy, Medium, and Hard difficulties. Heatmap shows daily submission activity.
-                  </p>
-                </div>
-              </article>
+            <div class="card__body">
+              <ul class="skill-list">
+                <li class="skill-pill">
+                  <i class="devicon-c-plain"></i>
+                  <span>C</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-cplusplus-plain"></i>
+                  <span>C++</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-r-plain"></i>
+                  <span>R</span>
+                </li>
+              </ul>
             </div>
-          </div>
-        </div>
-      </section>
+          </article>
+          <article class="card reveal">
+            <p class="card__eyebrow">• 02</p>
+            <h3 class="card__title">
+              <span class="skill-icon skill-icon--frontend"></span>
+              FRONTEND
+            </h3>
+            <div class="card__body">
+              <ul class="skill-list">
+                <li class="skill-pill">
+                  <i class="devicon-html5-plain"></i>
+                  <span>HTML</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-css3-plain"></i>
+                  <span>CSS</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-python-plain"></i>
+                  <span>STREAMLIT</span>
+                </li>
+              </ul>
+            </div>
+          </article>
 
-      <!-- CONTACT SECTION -->
-      <section id="contact" class="section section--dark">
-        <div class="section__inner section__inner--center">
-          <h2 class="section__title reveal">Stay in Touch</h2>
-          <p class="section__lead reveal">
-           wanna work with me?
+          <article class="card reveal">
+            <p class="card__eyebrow">• 03</p>
+            <h3 class="card__title">
+              <span class="skill-icon skill-icon--backend"></span>
+              BACKEND
+            </h3>
+            <div class="card__body">
+              <ul class="skill-list">
+                <li class="skill-pill">
+                  <i class="devicon-sqlite-plain"></i>
+                  <span>SQLITE</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-mysql-plain"></i>
+                  <span>MYSQL</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <p class="card__eyebrow">• 04</p>
+            <h3 class="card__title">
+              <span class="skill-icon skill-icon--git"></span>
+              VERSION CONTROL
+            </h3>
+            <div class="card__body">
+              <ul class="skill-list">
+                <li class="skill-pill">
+                  <i class="devicon-git-plain"></i>
+                  <span>GIT</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-github-original"></i>
+                  <span>GITHUB</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <p class="card__eyebrow">• 05</p>
+            <h3 class="card__title">
+              <span class="skill-icon skill-icon--data"></span>
+              DATA SCIENCE
+            </h3>
+            <div class="card__body">
+              <ul class="skill-list">
+                <li class="skill-pill">
+                  <i class="devicon-python-plain"></i>
+                  <span>PYTHON</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-numpy-original"></i>
+                  <span>NUMPY</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-pandas-original"></i>
+                  <span>PANDAS</span>
+                </li>
+                <li class="skill-pill">
+                  <span>🧹</span>
+                  <span>DATA CLEANING</span>
+                </li>
+                <li class="skill-pill">
+                  <i class="devicon-powerbi-plain"></i>
+                  <span>Power BI</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <div class="tour-grid">
+          <a href="#experience" class="tour-card reveal">
+            <span class="tour-card__label">Explore</span>
+            <span class="tour-card__title">EXPERIENCE</span>
+          </a>
+          <a href="#skills" class="tour-card reveal">
+            <span class="tour-card__label">Explore</span>
+            <span class="tour-card__title">SKILLS</span>
+          </a>
+          <a href="#Projects" class="tour-card reveal">
+            <span class="tour-card__label">Explore</span>
+            <span class="tour-card__title">PROJECTS</span>
+          </a>
+          <a href="#media" class="tour-card reveal">
+            <span class="tour-card__label">EXPLORE</span>
+            <span class="tour-card__title">MEDIA</span>
+          </a>
+          <a href="#contact" class="tour-card reveal">
+            <span class="tour-card__label">Connect</span>
+            <span class="tour-card__title">Work With Me</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDIA SECTION (WITH CV) -->
+    <section id="media" class="section section--light">
+      <div class="section__inner">
+        <h2 class="section__title reveal">Media</h2>
+        <p class="section__lead reveal">
+          My CV and coding activity dashboard.
+        </p>
+
+        <div class="media-grid">
+          <!-- CV DOWNLOAD CARD -->
+          <article class="media-card reveal">
+            <div class="media-card__thumbnail"
+              style="background: linear-gradient(135deg, #ffd34f, #ff3ea5); cursor: pointer;"
+              onclick="window.open('assets/mayank.pdf', '_blank')">
+              <div style="font-size: 4rem; color: rgba(5, 3, 10, 0.8);">📄</div>
+            </div>
+            <div class="media-card__content">
+              <p class="media-card__eyebrow">Document • Resume</p>
+              <h3 class="media-card__title">Download My CV</h3>
+              <p class="media-card__body">
+                Complete resume with work experience, projects, skills, and education.
+              </p>
+            </div>
+          </article>
+
+          <!-- PROFILE PHOTO -->
+          <article class="media-card reveal">
+            <div class="media-card__thumbnail">
+              <img src="assets/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar"
+                style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.9;"
+                loading="lazy">
+            </div>
+            <div class="media-card__content">
+              <p class="media-card__eyebrow">Image • Profile</p>
+              <h3 class="media-card__title">Professional Photo</h3>
+              <p class="media-card__body">
+                Portfolio headshot for professional use.
+              </p>
+            </div>
+          </article>
+
+          <!-- GITHUB PROFILE -->
+          <article class="media-card reveal">
+            <div class="media-card__thumbnail"
+              style="background: linear-gradient(135deg, #2ea44f, #1a7f37); cursor: pointer;"
+              onclick="window.open('https://github.com/MYNKCHOMIYA', '_blank')">
+              <div style="font-size: 4rem; color: rgba(255, 255, 255, 0.9);">⚡</div>
+            </div>
+            <div class="media-card__content">
+              <p class="media-card__eyebrow">Platform • GitHub</p>
+              <h3 class="media-card__title">GitHub Profile</h3>
+              <p class="media-card__body">
+                View all repositories and contributions.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <!-- CODING ACTIVITY WIDGETS -->
+        <div class="activity reveal" data-github-user="MYNKCHOMIYA" data-leetcode-user="MYNK_CHOMIYA">
+          <h3 class="section__subtitle">Coding Activity Dashboard</h3>
+          <p class="section__lead">
+            Live GitHub and LeetCode activity — commits, streaks, and problem submissions.
           </p>
-          <div class="contact-details reveal">
-            <p><strong>Email:</strong> mayankchomia@gmail.com</p>
-            <p><strong>Location:</strong> JAIPUR(RAJ.), IND(+91)</p>
-            <p>
-              <strong>Social:</strong>
-              <BR>
-              ·
-              <a href="https://github.com/MYNKCHOMIYA" class="accent-link">GitHub</a> <BR>·
-              <a href="https://www.linkedin.com/in/mynk-chomiya/" class="accent-link">LinkedIn</a><BR>·
-                <a href="https://x.com/MayankChomia"
-                target="_blank"
-                rel="noopener noreferrer" class="accent-link">twitter</a> 
-                
-            </p>
+
+          <div class="activity-grid">
+            <!-- GITHUB ACTIVITY WIDGET -->
+            <article class="activity-card activity-card--github" id="github-widget">
+              <div class="activity-card__top">
+                <div>
+                  <p class="activity-card__eyebrow">GitHub Activity</p>
+                  <h4 class="activity-card__title">Dev Profile</h4>
+                </div>
+                <div class="activity-card__stats-row">
+                  <div class="stat-item">
+                    <span class="stat-value" id="gh-repos">-</span>
+                    <span class="stat-label">Repos</span>
+                  </div>
+                  <div class="stat-item">
+                    <span class="stat-value" id="gh-followers">-</span>
+                    <span class="stat-label">Followers</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="activity-card__body">
+                <a class="activity-link" href="https://github.com/MYNKCHOMIYA" target="_blank"
+                  rel="noopener noreferrer">View GitHub Profile</a>
+
+                <div class="github-chart-container">
+                  <h5 class="widget-subtitle">Last 60 Days Activity</h5>
+
+                  <!-- Heatmap Grid -->
+                  <div class="gh-heatmap" id="gh-heatmap">
+                    <!-- JS will populate: 60 squares with tooltips -->
+                  </div>
+
+                  <!-- Detail Panel (OnClick) -->
+                  <div class="gh-details" id="gh-details">
+                    <p class="gh-details-placeholder">Click a square to view activity details.</p>
+                  </div>
+
+                  <!-- Fallback/Legacy Timeline (Optional, maybe keep as "Latest Pushes" below or remove) -->
+                  <div class="project-timeline is-hidden" id="gh-timeline"></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- LEETCODE ACTIVITY WIDGET -->
+            <article class="activity-card activity-card--leetcode" id="leetcode-widget">
+              <div class="activity-card__top">
+                <div>
+                  <p class="activity-card__eyebrow">LeetCode Activity</p>
+                  <h4 class="activity-card__title">Problem Solving</h4>
+                </div>
+              </div>
+
+              <div class="activity-card__body leetcode-body">
+                <a class="activity-link" href="https://leetcode.com/u/MYNK_CHOMIYA/" target="_blank"
+                  rel="noopener noreferrer">View LeetCode Profile</a>
+
+                <div class="leetcode-stats-container">
+                  <!-- Circular Progress for Total -->
+                  <div class="leetcode-circle-wrap">
+                    <div class="leetcode-circle" id="lc-circle" style="--p: 0; --c: #ffa116;">
+                      <div class="leetcode-circle-inner">
+                        <span class="leetcode-total" id="lc-total">0</span>
+                        <span class="leetcode-label">Solved</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Breakdown -->
+                  <div class="leetcode-breakdown">
+                    <div class="lc-stat-item">
+                      <span class="lc-label">Easy</span>
+                      <div class="lc-bar-bg">
+                        <div class="lc-bar" id="lc-easy-bar" style="width: 0%; background: #00b8a3;"></div>
+                      </div>
+                      <span class="lc-value" id="lc-easy-val">0</span>
+                    </div>
+                    <div class="lc-stat-item">
+                      <span class="lc-label">Medium</span>
+                      <div class="lc-bar-bg">
+                        <div class="lc-bar" id="lc-medium-bar" style="width: 0%; background: #ffc01e;"></div>
+                      </div>
+                      <span class="lc-value" id="lc-medium-val">0</span>
+                    </div>
+                    <div class="lc-stat-item">
+                      <span class="lc-label">Hard</span>
+                      <div class="lc-bar-bg">
+                        <div class="lc-bar" id="lc-hard-bar" style="width: 0%; background: #ef4743;"></div>
+                      </div>
+                      <span class="lc-value" id="lc-hard-val">0</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
           </div>
-          <a href="mailto:mayankchomia@gmail.com" class="btn btn--primary btn--wide reveal"
-            >Contact Me</a
-          >
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
-    <footer class="footer">
-      <p>
-        © <span id="year"></span> Mayank Kumar
-      </p>
-    </footer>
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section section--dark">
+      <div class="section__inner section__inner--center">
+        <h2 class="section__title reveal">Stay in Touch</h2>
+        <p class="section__lead reveal">
+          wanna work with me?
+        </p>
+        <div class="contact-details reveal">
+          <p><strong>Email:</strong> mayankchomia@gmail.com</p>
+          <p><strong>Location:</strong> JAIPUR(RAJ.), IND(+91)</p>
+          <p>
+            <strong>Social:</strong>
+            <BR>
+            ·
+            <a href="https://github.com/MYNKCHOMIYA" class="accent-link">GitHub</a> <BR>·
+            <a href="https://www.linkedin.com/in/mynk-chomiya/" class="accent-link">LinkedIn</a><BR>·
+            <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer"
+              class="accent-link">twitter</a>
 
-    <script src="main.js"></script>
-  </body>
+          </p>
+        </div>
+        <a href="mailto:mayankchomia@gmail.com" class="btn btn--primary btn--wide reveal">Contact Me</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      © <span id="year"></span> Mayank Kumar
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+
 </html>

@@ -3,7 +3,7 @@
 // PWA Registration
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+    navigator.serviceWorker.register("./sw.js").catch(() => { });
   });
 }
 
@@ -43,22 +43,31 @@ if (yearEl) {
 }
 
 // Cursor Effect
+// Cursor Effect
 (() => {
+  const cursor = document.getElementById("cursor-spotlight");
+  if (!cursor) return;
+
   let x = window.innerWidth / 2;
   let y = window.innerHeight / 2;
+  let ticking = false;
 
-  const set = () => {
-    document.body.style.setProperty("--cursor-x", `${x}px`);
-    document.body.style.setProperty("--cursor-y", `${y}px`);
+  const updateCursor = () => {
+    cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    ticking = false;
   };
 
   window.addEventListener(
     "pointermove",
     (e) => {
-      x = e.clientX;
+      x = e.clientX; // No need to account for scroll because position: fixed
       y = e.clientY;
       document.body.classList.add("is-pointer");
-      set();
+
+      if (!ticking) {
+        window.requestAnimationFrame(updateCursor);
+        ticking = true;
+      }
     },
     { passive: true }
   );
@@ -67,7 +76,8 @@ if (yearEl) {
     document.body.classList.remove("is-pointer");
   });
 
-  set();
+  // Initial set
+  updateCursor();
 })();
 
 // Scroll Reveal
@@ -92,73 +102,238 @@ if ("IntersectionObserver" in window) {
 }
 
 // ============= ACTIVITY WIDGETS =============
+// ============= ACTIVITY WIDGETS (DYNAMIC) =============
 (() => {
   const root = document.querySelector(".activity");
   if (!root) return;
 
-  const ghUser = root.getAttribute("data-github-user") || "";
-  const lcUser = root.getAttribute("data-leetcode-user") || "";
+  const ghUser = root.getAttribute("data-github-user") || "MYNKCHOMIYA";
+  const lcUser = root.getAttribute("data-leetcode-user") || "MYNK_CHOMIYA";
 
-  // GitHub Images
-  const ghContrib = root.querySelector(
-    "img[data-activity-img='github'][data-view='contrib']"
-  );
-  const ghStreak = root.querySelector(
-    "img[data-activity-img='github'][data-view='streak']"
-  );
+  // --- GITHUB STATS ---
+  async function fetchGitHubStats() {
+    try {
+      // 1. User Profile Stats
+      const profileRes = await fetch(`https://api.github.com/users/${ghUser}`);
+      if (!profileRes.ok) throw new Error("GitHub User Not Found");
+      const profileData = await profileRes.json();
 
-  // LeetCode Images
-  const lcCard = root.querySelector(
-    "img[data-activity-img='leetcode'][data-view='card']"
-  );
-  const lcHeat = root.querySelector(
-    "img[data-activity-img='leetcode'][data-view='heatmap']"
-  );
+      const repoEl = document.getElementById("gh-repos");
+      const followerEl = document.getElementById("gh-followers");
 
-  // Set GitHub URLs
-  if (ghContrib && ghUser) {
-    ghContrib.src = `https://ghchart.rshah.org/2ea44f/${encodeURIComponent(ghUser)}`;
-  }
+      if (repoEl) repoEl.textContent = profileData.public_repos;
+      if (followerEl) followerEl.textContent = profileData.followers;
 
-  if (ghStreak && ghUser) {
-    ghStreak.src = `https://github-readme-streak-stats.herokuapp.com/?user=${encodeURIComponent(
-      ghUser
-    )}&theme=dark&hide_border=true&background=05030A&ring=FF3EA5&fire=FFD34F&currStreakLabel=F7F3FF&sideLabels=F7F3FF&currStreakNum=FF3EA5&dates=A39BB8`;
-  }
+      // 2. Fetch Events for Heatmap (Last ~300 events)
+      const eventsRes = await fetch(`https://api.github.com/users/${ghUser}/events?per_page=100`);
+      if (!eventsRes.ok) throw new Error("GitHub Events Failed");
+      const eventsData = await eventsRes.json();
 
-  // Set LeetCode URLs
-  if (lcCard && lcUser) {
-    lcCard.src = `https://leetcard.jacoblin.cool/${encodeURIComponent(
-      lcUser
-    )}?theme=dark&font=Karla&ext=contest&border=0`;
-  }
+      // Process Data for Heatmap
+      const activityMap = {}; // "YYYY-MM-DD": { count: 0, repos: Set() }
 
-  if (lcHeat && lcUser) {
-    lcHeat.src = `https://leetcode-stats-six.vercel.app/api?username=${encodeURIComponent(
-      lcUser
-    )}&theme=dark`;
-  }
+      eventsData.forEach(event => {
+        if (event.type === "PushEvent" || event.type === "CreateEvent" || event.type === "PullRequestEvent") {
+          const date = event.created_at.split("T")[0];
+          if (!activityMap[date]) {
+            activityMap[date] = { count: 0, repos: new Set(), events: [] };
+          }
 
-  // Tab Switching
-  root.querySelectorAll(".activity-tab").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const activity = btn.getAttribute("data-activity");
-      const view = btn.getAttribute("data-view");
-      if (!activity || !view) return;
-
-      const tablist = btn.closest(".activity-tabs");
-      tablist?.querySelectorAll(".activity-tab").forEach((b) => {
-        b.classList.toggle("is-active", b === btn);
+          // Increment count (weight Pushes more?)
+          const weight = event.type === "PushEvent" ? event.payload.size : 1;
+          activityMap[date].count += weight;
+          activityMap[date].repos.add(event.repo.name);
+          activityMap[date].events.push(event);
+        }
       });
 
-      root
-        .querySelectorAll(`img[data-activity-img='${activity}']`)
-        .forEach((img) => {
-          const imgView = img.getAttribute("data-view");
-          img.classList.toggle("is-hidden", imgView !== view);
-        });
+      renderHeatmap(activityMap);
+
+    } catch (err) {
+      console.error("GitHub Fetch Error:", err);
+      const heatmapEl = document.getElementById("gh-heatmap");
+      if (heatmapEl) heatmapEl.innerHTML = `<div class="timeline-loader">Failed to load GitHub activity.</div>`;
+    }
+  }
+
+  function renderHeatmap(activityMap) {
+    const heatmapEl = document.getElementById("gh-heatmap");
+    const detailsEl = document.getElementById("gh-details");
+    if (!heatmapEl || !detailsEl) return;
+
+    heatmapEl.innerHTML = "";
+
+    // Generate last 60 days
+    const today = new Date();
+    const days = [];
+    for (let i = 59; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      days.push(d.toISOString().split("T")[0]);
+    }
+
+    days.forEach(dateStr => {
+      const dayData = activityMap[dateStr] || { count: 0, repos: new Set(), events: [] };
+      const count = dayData.count;
+
+      // Determine Level (0-4)
+      let level = 0;
+      if (count > 0) level = 1;
+      if (count > 3) level = 2;
+      if (count > 6) level = 3;
+      if (count > 10) level = 4;
+
+      const dayEl = document.createElement("div");
+      dayEl.className = "gh-day";
+      dayEl.setAttribute("data-date", dateStr);
+      dayEl.setAttribute("data-count", count);
+      dayEl.setAttribute("data-level", level);
+
+      // Click Interaction
+      dayEl.addEventListener("click", () => {
+        // Highlight selected day
+        document.querySelectorAll(".gh-day").forEach(d => d.style.border = "none");
+        dayEl.style.border = "1px solid #fff";
+
+        // Show details
+        if (count === 0) {
+          detailsEl.innerHTML = `<p class="gh-details-placeholder">No public activity on ${dateStr}.</p>`;
+        } else {
+          const repoList = Array.from(dayData.repos).map(repo => {
+            return `
+              <a href="https://github.com/${repo}" target="_blank" class="gh-repo-item">
+                <span class="gh-repo-name">${repo}</span>
+                <span class="gh-repo-desc">${dayData.events.filter(e => e.repo.name === repo).length} actions</span>
+              </a>
+            `;
+          }).join("");
+
+          detailsEl.innerHTML = `
+            <p class="widget-subtitle" style="margin-bottom:0.5rem; color:#fff;">Activity on ${dateStr}</p>
+            <div style="max-height:100px; overflow-y:auto; padding-right:5px;">
+              ${repoList}
+            </div>
+          `;
+        }
+      });
+
+      heatmapEl.appendChild(dayEl);
     });
-  });
+  }
+
+  // --- LEETCODE STATS ---
+  async function fetchLeetCodeStats() {
+    try {
+      // Using a proxy because LeetCode does not have a public CORS-enabled API
+      const res = await fetch(`https://leetcode-stats-api.herokuapp.com/${lcUser}`);
+      if (!res.ok) throw new Error("LeetCode API Error");
+      const data = await res.json();
+
+      if (data.status === "error") throw new Error(data.message);
+
+      // Update Total
+      const totalEl = document.getElementById("lc-total");
+      const circleEl = document.getElementById("lc-circle");
+
+      if (totalEl) {
+        animateValue(totalEl, 0, data.totalSolved, 1500);
+      }
+
+      // Update Circle Ring (Assuming ~2500 total problems on site for calculation, or just use percentage of arbitrary max)
+      // Actually data.totalQuestions is available
+      if (circleEl && data.totalQuestions) {
+        const percentage = (data.totalSolved / data.totalQuestions) * 100;
+        // set timeout to trigger CSS animation
+        setTimeout(() => {
+          circleEl.style.setProperty("--p", Math.round(percentage));
+        }, 100);
+      }
+
+      // Update Bars
+      updateBar("easy", data.easySolved, data.totalEasy);
+      updateBar("medium", data.mediumSolved, data.totalMedium);
+      updateBar("hard", data.hardSolved, data.totalHard);
+
+    } catch (err) {
+      console.error("LeetCode Fetch Error:", err);
+      // Fallback or error state
+    }
+  }
+
+  function updateBar(difficulty, solved, total) {
+    const valEl = document.getElementById(`lc-${difficulty}-val`);
+    const barEl = document.getElementById(`lc-${difficulty}-bar`);
+
+    if (valEl) valEl.textContent = solved;
+    if (barEl) {
+      const pct = (solved / total) * 100;
+      setTimeout(() => {
+        barEl.style.width = `${pct}%`;
+      }, 300);
+    }
+  }
+
+  function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      obj.innerHTML = Math.floor(progress * (end - start) + start);
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }
+
+  fetchGitHubStats();
+  fetchLeetCodeStats();
+})();
+
+// ============= TYPING EFFECT =============
+(() => {
+  const typingText = document.getElementById("typing-text");
+  if (!typingText) return;
+
+  const roles = [
+    "Data Scientist",
+    "System Programmer",
+    "Full Stack Developer",
+    "Problem Solver"
+  ];
+
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typeSpeed = 100;
+
+  function type() {
+    const currentRole = roles[roleIndex];
+
+    if (isDeleting) {
+      typingText.textContent = currentRole.substring(0, charIndex - 1);
+      charIndex--;
+      typeSpeed = 50; // Deleting speed
+    } else {
+      typingText.textContent = currentRole.substring(0, charIndex + 1);
+      charIndex++;
+      typeSpeed = 100; // Typing speed
+    }
+
+    if (!isDeleting && charIndex === currentRole.length) {
+      isDeleting = true;
+      typeSpeed = 2000; // Pause at end
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      typeSpeed = 500; // Pause before typing next
+    }
+
+    setTimeout(type, typeSpeed);
+  }
+
+  // Start
+  setTimeout(type, 1000);
 })();
 
 // ============= EXPERIENCE — TIMELINE LINE REVEAL + CERTIFICATE MODAL =============
