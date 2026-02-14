@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -45,10 +45,12 @@
   <script defer src="/_vercel/insights/script.js"></script>
 
 
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" as="style" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
 </head>
 
 <body>
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
   <div id="cursor-spotlight"></div>
   <!-- TOP NAVBAR -->
   <header class="nav">
@@ -65,7 +67,7 @@
       <a href="#Projects">Projects</a>
       <a href="#experience">Experience</a>
       <a href="#skills">SKILLS</a>
-      <a href="#media">Media</a>
+      <a href="#dashboard">Dashboard</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -103,8 +105,10 @@
 
         <div class="hero__profile reveal">
           <div class="hero__avatar-ring">
-            <img src="assets/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar" class="hero__avatar"
-              width="300" height="300" fetchpriority="high" />
+            <div class="hero__avatar-inner">
+              <img src="assets/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar" class="hero__avatar"
+                width="300" height="300" fetchpriority="high" />
+            </div>
           </div>
         </div>
       </div>
@@ -477,71 +481,74 @@
       </div>
     </section>
 
-    <!-- MEDIA SECTION (WITH CV) -->
-    <section id="media" class="section section--light">
+    <!-- DEVELOPER ACTIVITY & IMPACT DASHBOARD -->
+    <section id="dashboard" class="dashboard-section">
       <div class="section__inner">
-        <h2 class="section__title reveal">Media</h2>
-        <p class="section__lead reveal">
-          My CV and coding activity dashboard.
-        </p>
+        <div class="dashboard-header reveal">
+          <p class="card__eyebrow">Live Stats & Activity</p>
+          <h2 class="section__title">Developer Activity & Impact</h2>
+          <p class="section__lead" style="margin-left:auto;margin-right:auto;text-align:center;">
+            Real-time overview of my coding journey — contributions, problem solving, and featured work.
+          </p>
+        </div>
 
-        <div class="media-grid">
-          <!-- CV DOWNLOAD CARD -->
-          <article class="media-card reveal">
-            <div class="media-card__thumbnail"
-              style="background: linear-gradient(135deg, #ffd34f, #ff3ea5); cursor: pointer;"
-              onclick="window.open('assets/mayank.pdf', '_blank')">
-              <div style="font-size: 4rem; color: rgba(5, 3, 10, 0.8);">📄</div>
+        <!-- QUICK-LINK ICONS ROW -->
+        <div class="dash-links reveal" id="dash-links">
+          <a href="assets/mayank.pdf" target="_blank" rel="noopener noreferrer" class="dash-link-card">
+            <div class="dash-link-icon dash-link-icon--cv">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <line x1="10" y1="9" x2="8" y2="9" />
+              </svg>
             </div>
-            <div class="media-card__content">
-              <p class="media-card__eyebrow">Document • Resume</p>
-              <h3 class="media-card__title">Download My CV</h3>
-              <p class="media-card__body">
-                Complete resume with work experience, projects, skills, and education.
-              </p>
+            <span class="dash-link-label">Download CV</span>
+          </a>
+          <a href="https://github.com/MYNKCHOMIYA" target="_blank" rel="noopener noreferrer" class="dash-link-card">
+            <div class="dash-link-icon dash-link-icon--gh">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+              </svg>
             </div>
-          </article>
-
-          <!-- PROFILE PHOTO -->
-          <article class="media-card reveal">
-            <div class="media-card__thumbnail">
-              <img src="assets/file_00000000916472079e59ba3a78b4bc3f.png" alt="Mayank Kumar"
-                style="width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0.9;"
-                loading="lazy">
+            <span class="dash-link-label">GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/mynk-chomiya/" target="_blank" rel="noopener noreferrer"
+            class="dash-link-card">
+            <div class="dash-link-icon dash-link-icon--li">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
             </div>
-            <div class="media-card__content">
-              <p class="media-card__eyebrow">Image • Profile</p>
-              <h3 class="media-card__title">Professional Photo</h3>
-              <p class="media-card__body">
-                Portfolio headshot for professional use.
-              </p>
+            <span class="dash-link-label">LinkedIn</span>
+          </a>
+          <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer" class="dash-link-card">
+            <div class="dash-link-icon dash-link-icon--x">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg>
             </div>
-          </article>
-
-          <!-- GITHUB PROFILE -->
-          <article class="media-card reveal">
-            <div class="media-card__thumbnail"
-              style="background: linear-gradient(135deg, #2ea44f, #1a7f37); cursor: pointer;"
-              onclick="window.open('https://github.com/MYNKCHOMIYA', '_blank')">
-              <div style="font-size: 4rem; color: rgba(255, 255, 255, 0.9);">⚡</div>
+            <span class="dash-link-label">X / Twitter</span>
+          </a>
+          <a href="https://leetcode.com/u/MYNK_CHOMIYA/" target="_blank" rel="noopener noreferrer"
+            class="dash-link-card">
+            <div class="dash-link-icon dash-link-icon--lc">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z" />
+              </svg>
             </div>
-            <div class="media-card__content">
-              <p class="media-card__eyebrow">Platform • GitHub</p>
-              <h3 class="media-card__title">GitHub Profile</h3>
-              <p class="media-card__body">
-                View all repositories and contributions.
-              </p>
-            </div>
-          </article>
+            <span class="dash-link-label">LeetCode</span>
+          </a>
         </div>
 
         <!-- CODING ACTIVITY WIDGETS -->
         <div class="activity reveal" data-github-user="MYNKCHOMIYA" data-leetcode-user="MYNK_CHOMIYA">
-          <h3 class="section__subtitle">Coding Activity Dashboard</h3>
-          <p class="section__lead">
-            Live GitHub and LeetCode activity — commits, streaks, and problem submissions.
-          </p>
-
           <div class="activity-grid">
             <!-- GITHUB ACTIVITY WIDGET -->
             <article class="activity-card activity-card--github" id="github-widget">
@@ -568,13 +575,7 @@
 
                 <div class="github-chart-container">
                   <h5 class="widget-subtitle">Last 60 Days Activity</h5>
-
-                  <!-- Heatmap Grid -->
-                  <div class="gh-heatmap" id="gh-heatmap">
-                    <!-- JS will populate: 60 squares with tooltips -->
-                  </div>
-
-                  <!-- Contribution Frequency Legend (GitHub-style) -->
+                  <div class="gh-heatmap" id="gh-heatmap"></div>
                   <div class="gh-legend" aria-label="Contribution frequency scale">
                     <span class="gh-legend-label">Less</span>
                     <span class="gh-legend-sq" data-level="0" title="No contributions"></span>
@@ -584,13 +585,9 @@
                     <span class="gh-legend-sq" data-level="4" title="7+ contributions"></span>
                     <span class="gh-legend-label">More</span>
                   </div>
-
-                  <!-- Detail Panel (OnClick) -->
                   <div class="gh-details" id="gh-details">
                     <p class="gh-details-placeholder">Click a square to view activity details.</p>
                   </div>
-
-                  <!-- Fallback/Legacy Timeline (Optional, maybe keep as "Latest Pushes" below or remove) -->
                   <div class="project-timeline is-hidden" id="gh-timeline"></div>
                 </div>
               </div>
@@ -610,40 +607,45 @@
                   rel="noopener noreferrer">View LeetCode Profile</a>
 
                 <div class="leetcode-stats-container">
-                  <!-- LeetCode-style SVG ring: stroke segments with dots, neon glow -->
                   <div class="leetcode-circle-wrap">
                     <div class="lc-ring-container">
                       <svg class="leetcode-svg" id="lc-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                           <filter id="lc-neon-easy" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="1" result="blur"/>
-                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            <feGaussianBlur stdDeviation="1" result="blur" />
+                            <feMerge>
+                              <feMergeNode in="blur" />
+                              <feMergeNode in="SourceGraphic" />
+                            </feMerge>
                           </filter>
                           <filter id="lc-neon-medium" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="1" result="blur"/>
-                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            <feGaussianBlur stdDeviation="1" result="blur" />
+                            <feMerge>
+                              <feMergeNode in="blur" />
+                              <feMergeNode in="SourceGraphic" />
+                            </feMerge>
                           </filter>
                           <filter id="lc-neon-hard" x="-50%" y="-50%" width="200%" height="200%">
-                            <feGaussianBlur stdDeviation="1" result="blur"/>
-                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                            <feGaussianBlur stdDeviation="1" result="blur" />
+                            <feMerge>
+                              <feMergeNode in="blur" />
+                              <feMergeNode in="SourceGraphic" />
+                            </feMerge>
                           </filter>
                         </defs>
-                        <circle class="lc-track" cx="50" cy="50" r="42"/>
-                        <circle class="lc-segment lc-segment--easy" id="lc-seg-easy" cx="50" cy="50" r="42"/>
-                        <circle class="lc-segment lc-segment--medium" id="lc-seg-medium" cx="50" cy="50" r="42"/>
-                        <circle class="lc-segment lc-segment--hard" id="lc-seg-hard" cx="50" cy="50" r="42"/>
+                        <circle class="lc-track" cx="50" cy="50" r="42" />
+                        <circle class="lc-segment lc-segment--easy" id="lc-seg-easy" cx="50" cy="50" r="42" />
+                        <circle class="lc-segment lc-segment--medium" id="lc-seg-medium" cx="50" cy="50" r="42" />
+                        <circle class="lc-segment lc-segment--hard" id="lc-seg-hard" cx="50" cy="50" r="42" />
                       </svg>
                       <div class="leetcode-circle-inner">
                         <span class="leetcode-ratio" id="lc-ratio">0/0</span>
-                        <span class="leetcode-solved">
-                          <span class="lc-check">✓</span> Solved
-                        </span>
+                        <span class="leetcode-solved"><span class="lc-check">✓</span> Solved</span>
                         <span class="leetcode-attempting" id="lc-attempting">0 Attempting</span>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Breakdown with X/Total format -->
                   <div class="leetcode-breakdown">
                     <div class="lc-stat-item" data-difficulty="easy">
                       <span class="lc-label lc-label--easy">Easy</span>
@@ -672,34 +674,160 @@
             </article>
           </div>
         </div>
+
+        <div class="dashboard-grid">
+          <!-- FEATURED TWEETS CARD -->
+          <div class="tweets-card reveal reveal-d1">
+            <div class="tweets-card__header">
+              <div class="tweets-card__icon"><img src="assets/file_00000000916472079e59ba3a78b4bc3f.png"
+                  alt="Mayank Kumar" width="40" height="40"></div>
+              <div>
+                <h3 class="tweets-card__title">Featured Posts</h3>
+                <span class="tweets-card__handle">@MayankChomia</span>
+              </div>
+            </div>
+
+            <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer" class="tweet-embed">
+              <p class="tweet-embed__text">Building systems, not just websites. Every commit is a step toward something
+                meaningful. 🚀</p>
+              <span class="tweet-embed__date">Follow on X →</span>
+            </a>
+            <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer" class="tweet-embed">
+              <p class="tweet-embed__text">Data science isn't about fancy models — it's about asking the right questions
+                and cleaning messy data. 📊</p>
+              <span class="tweet-embed__date">Follow on X →</span>
+            </a>
+            <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer" class="tweet-embed">
+              <p class="tweet-embed__text">From C to Python to FastAPI — every language teaches you a different way to
+                think. Still learning. Still building. 💡</p>
+              <span class="tweet-embed__date">Follow on X →</span>
+            </a>
+          </div>
+
+          <!-- HIGHLIGHTED PROJECTS CARD -->
+          <div class="projects-dash-card reveal reveal-d2">
+            <div class="tweets-card__header">
+              <div class="tweets-card__icon"
+                style="background:linear-gradient(135deg, var(--accent-gold), var(--accent-pink));">⚡</div>
+              <div>
+                <h3 class="tweets-card__title">Highlighted Projects</h3>
+                <span class="tweets-card__handle">Click to explore</span>
+              </div>
+            </div>
+
+            <div class="project-mini" data-project="fleetstat" data-title="FleetStat — Vehicle Analytics"
+              data-desc="A data-driven system built to analyze vehicle trips, performance, and fuel usage using real-world data. Designed to transform raw vehicle logs into clear insights with Python, FastAPI, Streamlit, and machine learning."
+              data-tech="Python,FastAPI,Streamlit,SQLite,Pandas,NumPy,ML"
+              data-url="https://github.com/MYNKCHOMIYA/FleetStat">
+              <h4 class="project-mini__name">FleetStat</h4>
+              <p class="project-mini__desc">Vehicle trip analysis & fuel insights with ML</p>
+              <div class="project-mini__tags">
+                <span class="project-mini__tag">Python</span>
+                <span class="project-mini__tag">FastAPI</span>
+                <span class="project-mini__tag">Streamlit</span>
+                <span class="project-mini__tag">ML</span>
+              </div>
+            </div>
+
+            <div class="project-mini" data-project="portfolio" data-title="Developer Portfolio"
+              data-desc="A cinematic, performance-focused portfolio website built with pure vanilla HTML, CSS, and JavaScript. Features glassmorphism design, interactive animations, live GitHub and LeetCode widgets, and Vercel-optimized deployment."
+              data-tech="HTML,CSS,JavaScript,Vercel,GitHub API,LeetCode API" data-url="https://github.com/MYNKCHOMIYA">
+              <h4 class="project-mini__name">This Portfolio</h4>
+              <p class="project-mini__desc">Cinematic portfolio with live coding stats</p>
+              <div class="project-mini__tags">
+                <span class="project-mini__tag">HTML</span>
+                <span class="project-mini__tag">CSS</span>
+                <span class="project-mini__tag">JavaScript</span>
+                <span class="project-mini__tag">Vercel</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- CONTACT SECTION -->
     <section id="contact" class="section section--dark">
       <div class="section__inner section__inner--center">
-        <h2 class="section__title reveal">Stay in Touch</h2>
-        <p class="section__lead reveal">
-          wanna work with me?
+        <p class="card__eyebrow reveal">Get In Touch</p>
+        <h2 class="section__title contact-title reveal">Let's Build Something<br><span
+            class="contact-title--accent">Together.</span></h2>
+        <p class="section__lead reveal" style="margin-left:auto;margin-right:auto;text-align:center;max-width:500px;">
+          Always open to exciting projects, collaborations, and new opportunities.
         </p>
-        <div class="contact-details reveal">
-          <p><strong>Email:</strong> mayankchomia@gmail.com</p>
-          <p><strong>Location:</strong> JAIPUR(RAJ.), IND(+91)</p>
-          <p>
-            <strong>Social:</strong>
-            <BR>
-            ·
-            <a href="https://github.com/MYNKCHOMIYA" class="accent-link">GitHub</a> <BR>·
-            <a href="https://www.linkedin.com/in/mynk-chomiya/" class="accent-link">LinkedIn</a><BR>·
-            <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer"
-              class="accent-link">twitter</a>
 
-          </p>
+        <div class="contact-cards reveal">
+          <a href="mailto:mayankchomia@gmail.com" class="contact-info-card">
+            <div class="contact-info-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </div>
+            <div>
+              <span class="contact-info-label">Email</span>
+              <span class="contact-info-value">mayankchomia@gmail.com</span>
+            </div>
+          </a>
+          <div class="contact-info-card">
+            <div class="contact-info-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <span class="contact-info-label">Location</span>
+              <span class="contact-info-value">Jaipur, Rajasthan, India</span>
+            </div>
+          </div>
         </div>
-        <a href="mailto:mayankchomia@gmail.com" class="btn btn--primary btn--wide reveal">Contact Me</a>
+
+        <div class="contact-socials reveal">
+          <a href="https://github.com/MYNKCHOMIYA" target="_blank" rel="noopener noreferrer" class="contact-social"
+            aria-label="GitHub">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/in/mynk-chomiya/" target="_blank" rel="noopener noreferrer"
+            class="contact-social" aria-label="LinkedIn">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+            </svg>
+          </a>
+          <a href="https://x.com/MayankChomia" target="_blank" rel="noopener noreferrer" class="contact-social"
+            aria-label="X / Twitter">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+          </a>
+        </div>
+
+        <a href="mailto:mayankchomia@gmail.com" class="btn btn--primary btn--wide btn--glow reveal">Send me a message
+          →</a>
       </div>
     </section>
   </main>
+
+  <!-- UNIVERSAL PROJECT DETAIL MODAL -->
+  <div id="project-modal" class="dash-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+    <div class="dash-modal__backdrop"></div>
+    <div class="dash-modal__box">
+      <button type="button" class="dash-modal__close" aria-label="Close">×</button>
+      <p class="dash-modal__eyebrow" id="project-modal-eyebrow">Project</p>
+      <h2 class="dash-modal__title" id="project-modal-title"></h2>
+      <p class="dash-modal__body" id="project-modal-body"></p>
+      <div class="dash-modal__tags" id="project-modal-tags"></div>
+      <a href="#" target="_blank" rel="noopener noreferrer" class="dash-modal__link" id="project-modal-link">View on
+        GitHub →</a>
+    </div>
+  </div>
 
   <footer class="footer">
     <p>

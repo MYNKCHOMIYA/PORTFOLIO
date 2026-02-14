@@ -83,25 +83,27 @@ if (yearEl) {
   updateCursor();
 })();
 
-// Scroll Reveal
-const revealElements = document.querySelectorAll(".reveal");
+// Scroll Reveal — runs immediately so above-fold elements are revealed without delay
+{
+  const revealElements = document.querySelectorAll(".reveal");
 
-if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("reveal--visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("reveal--visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
 
-  revealElements.forEach((el) => observer.observe(el));
-} else {
-  revealElements.forEach((el) => el.classList.add("reveal--visible"));
+    revealElements.forEach((el) => observer.observe(el));
+  } else {
+    revealElements.forEach((el) => el.classList.add("reveal--visible"));
+  }
 }
 
 // ============= ACTIVITY WIDGETS =============
@@ -524,5 +526,225 @@ if ("IntersectionObserver" in window) {
     if (e.key === "Escape" && modal.classList.contains("is-open")) {
       closeCertModal();
     }
+  });
+})();
+
+// ============= PARALLAX TILT EFFECT ON CARDS =============
+(() => {
+  const tiltElements = document.querySelectorAll(
+    ".card, .activity-card, .media-card, .tweets-card, .projects-dash-card"
+  );
+  if (!tiltElements.length) return;
+
+  let ticking = false;
+
+  tiltElements.forEach((el) => {
+    el.addEventListener(
+      "mousemove",
+      (e) => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const rect = el.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateY = ((x - centerX) / centerX) * 5; // max 5deg
+          const rotateX = ((centerY - y) / centerY) * 5;
+          el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.02)`;
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
+
+    el.addEventListener("mouseleave", () => {
+      el.style.transform = "";
+    });
+  });
+})();
+
+// ============= RIPPLE CLICK EFFECT =============
+(() => {
+  const rippleTargets = document.querySelectorAll(
+    ".card, .activity-card, .media-card, .tour-card, .cert-card, .btn, .hero__badge, .tweets-card, .projects-dash-card, .project-mini, .tweet-embed"
+  );
+
+  rippleTargets.forEach((el) => {
+    el.addEventListener("click", (e) => {
+      const rect = el.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const ripple = document.createElement("span");
+      ripple.className = "ripple";
+      ripple.style.width = ripple.style.height = `${size}px`;
+      ripple.style.left = `${e.clientX - rect.left - size / 2}px`;
+      ripple.style.top = `${e.clientY - rect.top - size / 2}px`;
+      el.appendChild(ripple);
+      ripple.addEventListener("animationend", () => ripple.remove());
+    });
+  });
+})();
+
+// ============= PROJECT DETAIL MODAL =============
+(() => {
+  const modal = document.getElementById("project-modal");
+  if (!modal) return;
+
+  const titleEl = document.getElementById("project-modal-title");
+  const bodyEl = document.getElementById("project-modal-body");
+  const tagsEl = document.getElementById("project-modal-tags");
+  const linkEl = document.getElementById("project-modal-link");
+  const closeBtn = modal.querySelector(".dash-modal__close");
+  const backdrop = modal.querySelector(".dash-modal__backdrop");
+
+  function openProjectModal(card) {
+    const title = card.getAttribute("data-title") || "";
+    const desc = card.getAttribute("data-desc") || "";
+    const tech = card.getAttribute("data-tech") || "";
+    const url = card.getAttribute("data-url") || "#";
+
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl) bodyEl.textContent = desc;
+    if (tagsEl) {
+      tagsEl.innerHTML = tech
+        .split(",")
+        .filter(Boolean)
+        .map((t) => `<span class="dash-modal__tag">${t.trim()}</span>`)
+        .join("");
+    }
+    if (linkEl) {
+      linkEl.href = url;
+      linkEl.style.display = url && url !== "#" ? "inline-flex" : "none";
+    }
+
+    modal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeBtn?.focus();
+  }
+
+  function closeProjectModal() {
+    modal.classList.remove("is-open");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".project-mini[data-title]").forEach((card) => {
+    card.addEventListener("click", () => openProjectModal(card));
+  });
+
+  closeBtn?.addEventListener("click", closeProjectModal);
+  backdrop?.addEventListener("click", closeProjectModal);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) {
+      closeProjectModal();
+    }
+  });
+})();
+
+// ============= AMBIENT FLOATING PARTICLES =============
+(() => {
+  const canvas = document.getElementById("particles-canvas");
+  if (!canvas) return;
+
+  // Respect prefers-reduced-motion
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  if (prefersReduced.matches) {
+    canvas.style.display = "none";
+    return;
+  }
+
+  const ctx = canvas.getContext("2d");
+  let w, h;
+  const particles = [];
+  const PARTICLE_COUNT = 35;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener("resize", resize, { passive: true });
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+    reset() {
+      this.x = Math.random() * w;
+      this.y = h + Math.random() * 100;
+      this.size = Math.random() * 2.5 + 0.5;
+      this.speedY = -(Math.random() * 0.4 + 0.1);
+      this.speedX = (Math.random() - 0.5) * 0.2;
+      this.opacity = Math.random() * 0.5 + 0.1;
+      this.fadeDir = Math.random() > 0.5 ? 0.002 : -0.002;
+      // Random color from palette
+      const colors = [
+        "255, 62, 165",  // pink
+        "55, 183, 255",  // blue
+        "255, 211, 79",  // gold
+        "200, 200, 255",  // white-ish
+      ];
+      this.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+    update() {
+      this.y += this.speedY;
+      this.x += this.speedX;
+      this.opacity += this.fadeDir;
+      if (this.opacity <= 0.05 || this.opacity >= 0.6) this.fadeDir *= -1;
+      if (this.y < -20 || this.x < -20 || this.x > w + 20) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const p = new Particle();
+    p.y = Math.random() * h; // Start spread across screen
+    particles.push(p);
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach((p) => {
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ============= ENHANCED CURSOR — SCROLL COLOR SHIFT =============
+(() => {
+  const cursor = document.getElementById("cursor-spotlight");
+  if (!cursor) return;
+
+  function updateCursorColor() {
+    const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
+    // Shift hue from blue (210) through pink (330) as user scrolls
+    const hue = 210 + scrollPct * 120;
+    cursor.style.background = `radial-gradient(circle at 50% 50%, hsla(${hue}, 80%, 65%, 0.12), transparent 65%)`;
+  }
+
+  window.addEventListener("scroll", updateCursorColor, { passive: true });
+  updateCursorColor();
+})();
+
+// ============= STAGGERED SCROLL REVEAL =============
+(() => {
+  // Add incremental delay to sibling .reveal elements in the same parent
+  const groups = document.querySelectorAll(
+    ".card-grid, .dashboard-grid, .media-grid, .tour-grid, .cert-grid, .activity-grid, .hero__badges"
+  );
+
+  groups.forEach((group) => {
+    const reveals = group.querySelectorAll(".reveal");
+    reveals.forEach((el, i) => {
+      el.style.transitionDelay = `${i * 80}ms`;
+    });
   });
 })();
