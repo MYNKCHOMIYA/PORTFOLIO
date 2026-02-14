@@ -321,25 +321,41 @@ if ("IntersectionObserver" in window) {
 
   function renderLeetCodeRing(pEasy, pMedium, pHard, pTotal) {
     const circum = 2 * Math.PI * 42;
-    const easyLen = (pEasy / 100) * circum;
-    const medLen = (pMedium / 100) * circum;
-    const hardLen = (pHard / 100) * circum;
+    const padding = 1.5; // Small padding to prevent overlap glitches if close
+    const easyLen = Math.max(0, (pEasy / 100) * circum);
+    const medLen = Math.max(0, (pMedium / 100) * circum);
+    const hardLen = Math.max(0, (pHard / 100) * circum);
 
     const segEasy = document.getElementById("lc-seg-easy");
     const segMed = document.getElementById("lc-seg-medium");
     const segHard = document.getElementById("lc-seg-hard");
 
     if (segEasy) {
-      segEasy.style.strokeDasharray = `${easyLen} ${circum + 100}`;
-      segEasy.style.strokeDashoffset = "0";
+      if (easyLen <= 0) {
+        segEasy.style.opacity = "0";
+      } else {
+        segEasy.style.opacity = "1";
+        segEasy.style.strokeDasharray = `${easyLen} ${circum + 100}`;
+        segEasy.style.strokeDashoffset = "0";
+      }
     }
     if (segMed) {
-      segMed.style.strokeDasharray = `${medLen} ${circum + 100}`;
-      segMed.style.strokeDashoffset = `-${easyLen}`;
+      if (medLen <= 0) {
+        segMed.style.opacity = "0";
+      } else {
+        segMed.style.opacity = "1";
+        segMed.style.strokeDasharray = `${medLen} ${circum + 100}`;
+        segMed.style.strokeDashoffset = `-${easyLen}`;
+      }
     }
     if (segHard) {
-      segHard.style.strokeDasharray = `${hardLen} ${circum + 100}`;
-      segHard.style.strokeDashoffset = `-${easyLen + medLen}`;
+      if (hardLen <= 0) {
+        segHard.style.opacity = "0";
+      } else {
+        segHard.style.opacity = "1";
+        segHard.style.strokeDasharray = `${hardLen} ${circum + 100}`;
+        segHard.style.strokeDashoffset = `-${easyLen + medLen}`;
+      }
     }
   }
 
