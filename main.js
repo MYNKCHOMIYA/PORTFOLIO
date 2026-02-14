@@ -1,9 +1,12 @@
 // Clean portfolio JavaScript - Activity widgets properly configured
 
 // PWA Registration
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(() => { });
+// PWA Unregistration
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
   });
 }
 
