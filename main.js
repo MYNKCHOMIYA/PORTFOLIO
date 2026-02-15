@@ -1,16 +1,40 @@
-// Clean portfolio JavaScript - Activity widgets properly configured
+/* ============================================================
+   PORTFOLIO SCRIPTS — TABLE OF CONTENTS
+   ============================================================
+   1.  SERVICE WORKER CLEANUP
+   2.  MOBILE NAVIGATION
+   3.  FOOTER YEAR
+   4.  CURSOR SPOTLIGHT EFFECT
+   5.  SCROLL REVEAL (IntersectionObserver)
+   6.  ACTIVITY WIDGETS (GitHub + LeetCode)
+       6a. GitHub Stats + Heatmap
+       6b. LeetCode Stats + Ring
+   7.  TYPING EFFECT
+   8.  EXPERIENCE TIMELINE + CERTIFICATE MODAL
+   9.  CARD PARALLAX TILT
+   10. RIPPLE CLICK EFFECT
+   11. PROJECT DETAIL MODAL
+   12. AMBIENT FLOATING PARTICLES
+   13. CURSOR SCROLL COLOR SHIFT
+   14. STAGGERED SCROLL REVEAL
+   ============================================================ */
 
-// PWA Registration
-// PWA Unregistration
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(registrations => {
+
+/* ═══════════════════════════════════════════════════════════════
+   1. SERVICE WORKER CLEANUP
+   ═══════════════════════════════════════════════════════════════ */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
     for (let registration of registrations) {
       registration.unregister();
     }
   });
 }
 
-// Mobile Navigation
+
+/* ═══════════════════════════════════════════════════════════════
+   2. MOBILE NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
 const nav = document.querySelector(".nav");
 const navToggle = document.querySelector(".nav__toggle");
 const navLinks = document.getElementById("nav-links");
@@ -39,14 +63,21 @@ if (nav && navToggle && navLinks) {
   });
 }
 
-// Footer Year
+
+/* ═══════════════════════════════════════════════════════════════
+   3. FOOTER YEAR
+   ═══════════════════════════════════════════════════════════════ */
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
 
-// Cursor Effect
-// Cursor Effect
+
+/* ═══════════════════════════════════════════════════════════════
+   4. CURSOR SPOTLIGHT EFFECT
+   Follows the mouse with a radial glow via translate3d (GPU).
+   Hidden on touch-only devices via CSS.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const cursor = document.getElementById("cursor-spotlight");
   if (!cursor) return;
@@ -63,7 +94,7 @@ if (yearEl) {
   window.addEventListener(
     "pointermove",
     (e) => {
-      x = e.clientX; // No need to account for scroll because position: fixed
+      x = e.clientX;
       y = e.clientY;
       document.body.classList.add("is-pointer");
 
@@ -79,11 +110,15 @@ if (yearEl) {
     document.body.classList.remove("is-pointer");
   });
 
-  // Initial set
   updateCursor();
 })();
 
-// Scroll Reveal — runs immediately so above-fold elements are revealed without delay
+
+/* ═══════════════════════════════════════════════════════════════
+   5. SCROLL REVEAL (IntersectionObserver)
+   Elements with class "reveal" fade in when 15% visible.
+   Observer unobserves after first reveal for performance.
+   ═══════════════════════════════════════════════════════════════ */
 {
   const revealElements = document.querySelectorAll(".reveal");
 
@@ -102,12 +137,17 @@ if (yearEl) {
 
     revealElements.forEach((el) => observer.observe(el));
   } else {
+    // Fallback: show everything immediately
     revealElements.forEach((el) => el.classList.add("reveal--visible"));
   }
 }
 
-// ============= ACTIVITY WIDGETS =============
-// ============= ACTIVITY WIDGETS (DYNAMIC) =============
+
+/* ═══════════════════════════════════════════════════════════════
+   6. ACTIVITY WIDGETS (GitHub + LeetCode)
+   Fetches live data from GitHub API and LeetCode Stats API,
+   then renders an interactive heatmap and progress ring.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const root = document.querySelector(".activity");
   if (!root) return;
@@ -115,10 +155,12 @@ if (yearEl) {
   const ghUser = root.getAttribute("data-github-user") || "MYNKCHOMIYA";
   const lcUser = root.getAttribute("data-leetcode-user") || "MYNK_CHOMIYA";
 
-  // --- GITHUB STATS ---
+
+  /* ─── 6a. GitHub Stats + Heatmap ─── */
+
   async function fetchGitHubStats() {
     try {
-      // 1. User Profile Stats
+      // Fetch user profile (repos, followers)
       const profileRes = await fetch(`https://api.github.com/users/${ghUser}`);
       if (!profileRes.ok) throw new Error("GitHub User Not Found");
       const profileData = await profileRes.json();
@@ -129,33 +171,40 @@ if (yearEl) {
       if (repoEl) repoEl.textContent = profileData.public_repos;
       if (followerEl) followerEl.textContent = profileData.followers;
 
-      // 2. Fetch Events for Heatmap (multiple pages for better 60-day coverage)
+      // Fetch events for heatmap (up to 3 pages for 60-day coverage)
       const allEvents = [];
       for (let page = 1; page <= 3; page++) {
-        const eventsRes = await fetch(`https://api.github.com/users/${ghUser}/events?per_page=100&page=${page}`);
+        const eventsRes = await fetch(
+          `https://api.github.com/users/${ghUser}/events?per_page=100&page=${page}`
+        );
         if (!eventsRes.ok) throw new Error("GitHub Events Failed");
         const pageData = await eventsRes.json();
         if (pageData.length === 0) break;
         allEvents.push(...pageData);
       }
-      const eventsData = allEvents;
 
-      // Process Data for Heatmap
-      const activityMap = {}; // "YYYY-MM-DD": { count: 0, repos: Set() }
-
-      eventsData.forEach(event => {
-        if (event.type === "PushEvent" || event.type === "CreateEvent" || event.type === "PullRequestEvent") {
+      // Build activity map: { "YYYY-MM-DD": { count, repos, events } }
+      const activityMap = {};
+      allEvents.forEach((event) => {
+        if (
+          event.type === "PushEvent" ||
+          event.type === "CreateEvent" ||
+          event.type === "PullRequestEvent"
+        ) {
           const date = event.created_at.split("T")[0];
           if (!activityMap[date]) {
             activityMap[date] = { count: 0, repos: new Set(), events: [] };
           }
 
-          // Increment count: PushEvent = commits (size or commits.length), others = 1
+          // Weight: PushEvent counts commits, others count as 1
           let weight = 1;
           if (event.type === "PushEvent" && event.payload) {
             const commits = event.payload.commits;
             const size = event.payload.size;
-            weight = (commits && commits.length) || (typeof size === "number" ? size : 1) || 1;
+            weight =
+              (commits && commits.length) ||
+              (typeof size === "number" ? size : 1) ||
+              1;
           }
           activityMap[date].count += weight;
           activityMap[date].repos.add(event.repo.name);
@@ -164,22 +213,18 @@ if (yearEl) {
       });
 
       renderHeatmap(activityMap);
-
     } catch (err) {
       console.error("GitHub Fetch Error:", err);
       const heatmapEl = document.getElementById("gh-heatmap");
-      if (heatmapEl) heatmapEl.innerHTML = `<div class="timeline-loader">Failed to load GitHub activity.</div>`;
+      if (heatmapEl)
+        heatmapEl.innerHTML = `<div class="timeline-loader">Failed to load GitHub activity.</div>`;
     }
   }
 
   function renderHeatmap(activityMap) {
     const heatmapEl = document.getElementById("gh-heatmap");
     const detailsEl = document.getElementById("gh-details");
-    if (!heatmapEl || !detailsEl) {
-      console.error("GitHub heatmap elements not found!");
-      return;
-    }
-    console.log("Rendering GitHub heatmap with activity data:", Object.keys(activityMap).length, "days with activity");
+    if (!heatmapEl || !detailsEl) return;
 
     heatmapEl.innerHTML = "";
 
@@ -192,13 +237,24 @@ if (yearEl) {
       days.push(d.toISOString().split("T")[0]);
     }
 
+    // GitHub-style level colors
+    const levelColors = [
+      "rgba(255,255,255,0.1)",
+      "#0e4429",
+      "#006d32",
+      "#26a641",
+      "#39d353",
+    ];
 
-
-    days.forEach(dateStr => {
-      const dayData = activityMap[dateStr] || { count: 0, repos: new Set(), events: [] };
+    days.forEach((dateStr) => {
+      const dayData = activityMap[dateStr] || {
+        count: 0,
+        repos: new Set(),
+        events: [],
+      };
       const count = dayData.count;
 
-      // Determine Level (0-4) - GitHub-style frequency colors
+      // Determine level (0–4)
       let level = 0;
       if (count >= 1) level = 1;
       if (count >= 2) level = 2;
@@ -211,62 +267,53 @@ if (yearEl) {
       dayEl.setAttribute("data-count", count);
       dayEl.setAttribute("data-level", level);
 
-      // Apply inline background so frequency colors always show (CSS fallback)
-      const levelColors = ["rgba(255,255,255,0.1)", "#0e4429", "#006d32", "#26a641", "#39d353"];
+      // Inline colors as fallback
       dayEl.style.backgroundColor = levelColors[level];
       dayEl.style.background = levelColors[level];
       if (level === 4) {
         dayEl.style.boxShadow = "0 0 10px rgba(57, 211, 83, 0.5)";
       }
 
-      // Click Interaction
+      // Click → show day details
       dayEl.addEventListener("click", () => {
-        // Highlight selected day
-        document.querySelectorAll(".gh-day").forEach(d => d.style.border = "none");
+        document
+          .querySelectorAll(".gh-day")
+          .forEach((d) => (d.style.border = "none"));
         dayEl.style.border = "1px solid #fff";
 
-        // Show details
         if (count === 0) {
           detailsEl.innerHTML = `<p class="gh-details-placeholder">No public activity on ${dateStr}.</p>`;
         } else {
-          const repoList = Array.from(dayData.repos).map(repo => {
-            return `
+          const repoList = Array.from(dayData.repos)
+            .map(
+              (repo) => `
               <a href="https://github.com/${repo}" target="_blank" class="gh-repo-item">
                 <span class="gh-repo-name">${repo}</span>
-                <span class="gh-repo-desc">${dayData.events.filter(e => e.repo.name === repo).length} actions</span>
-              </a>
-            `;
-          }).join("");
+                <span class="gh-repo-desc">${dayData.events.filter((e) => e.repo.name === repo).length} actions</span>
+              </a>`
+            )
+            .join("");
 
           detailsEl.innerHTML = `
             <p class="widget-subtitle" style="margin-bottom:0.5rem; color:#fff;">Activity on ${dateStr}</p>
             <div style="max-height:100px; overflow-y:auto; padding-right:5px;">
               ${repoList}
-            </div>
-          `;
+            </div>`;
         }
       });
 
       heatmapEl.appendChild(dayEl);
     });
-
-    console.log("GitHub heatmap rendered:", days.length, "squares created");
-    // Log a sample square to verify attributes and styles
-    const sampleSquare = heatmapEl.querySelector('.gh-day[data-level="1"], .gh-day[data-level="2"], .gh-day[data-level="3"], .gh-day[data-level="4"]');
-    if (sampleSquare) {
-      console.log("Sample active square:", {
-        level: sampleSquare.getAttribute('data-level'),
-        count: sampleSquare.getAttribute('data-count'),
-        inlineStyle: sampleSquare.style.backgroundColor,
-        computedStyle: window.getComputedStyle(sampleSquare).backgroundColor
-      });
-    }
   }
 
-  // --- LEETCODE STATS (LeetCode-style interactive) ---
+
+  /* ─── 6b. LeetCode Stats + Ring ─── */
+
   async function fetchLeetCodeStats() {
     try {
-      const res = await fetch(`https://leetcode-stats-api.herokuapp.com/${lcUser}`);
+      const res = await fetch(
+        `https://leetcode-stats-api.herokuapp.com/${lcUser}`
+      );
       if (!res.ok) throw new Error("LeetCode API Error");
       const data = await res.json();
 
@@ -284,8 +331,11 @@ if (yearEl) {
       const ratioEl = document.getElementById("lc-ratio");
       const attemptingEl = document.getElementById("lc-attempting");
 
-      // SVG ring: Easy (teal), Medium (yellow), Hard (red) - stroke segments with dots
-      let pEasy = 0, pMedium = 0, pHard = 0, pTotal = 0;
+      // Calculate ring segment percentages
+      let pEasy = 0,
+        pMedium = 0,
+        pHard = 0,
+        pTotal = 0;
       if (solved > 0 && totalQ > 0) {
         const actualPct = (solved / totalQ) * 100;
         const minVisible = 18;
@@ -301,24 +351,23 @@ if (yearEl) {
 
       renderLeetCodeRing(pEasy, pMedium, pHard, pTotal);
 
-      // Animated ratio (solved/total)
+      // Animated ratio counter
       if (ratioEl) {
         animateRatio(ratioEl, 0, solved, 0, totalQ, 1400);
       }
 
-      // Attempting (LeetCode shows problems in progress; API typically doesn't provide)
       if (attemptingEl) {
         attemptingEl.textContent = "0 Attempting";
       }
 
-      // Staggered reveal for breakdown items
-      document.querySelectorAll(".lc-stat-item").forEach(el => el.classList.add("lc-stat-item--visible"));
+      // Staggered reveal for breakdown bars
+      document
+        .querySelectorAll(".lc-stat-item")
+        .forEach((el) => el.classList.add("lc-stat-item--visible"));
 
-      // Bars with X/Total format and animated fill
       updateBar("easy", easyS, totalE, 0.3);
       updateBar("medium", medS, totalM, 0.5);
       updateBar("hard", hardS, totalH, 0.7);
-
     } catch (err) {
       console.error("LeetCode Fetch Error:", err);
     }
@@ -326,7 +375,6 @@ if (yearEl) {
 
   function renderLeetCodeRing(pEasy, pMedium, pHard, pTotal) {
     const circum = 2 * Math.PI * 42;
-    const padding = 1.5; // Small padding to prevent overlap glitches if close
     const easyLen = Math.max(0, (pEasy / 100) * circum);
     const medLen = Math.max(0, (pMedium / 100) * circum);
     const hardLen = Math.max(0, (pHard / 100) * circum);
@@ -371,9 +419,11 @@ if (yearEl) {
     if (valEl) {
       valEl.textContent = `${solved}/${total}`;
       valEl.style.opacity = "0";
-      valEl.offsetHeight; // reflow
+      valEl.offsetHeight; // force reflow
       valEl.style.transition = "opacity 0.4s ease-out";
-      setTimeout(() => { valEl.style.opacity = "1"; }, 400 + delay * 400);
+      setTimeout(() => {
+        valEl.style.opacity = "1";
+      }, 400 + delay * 400);
     }
     if (barEl) {
       const pct = total > 0 ? (solved / total) * 100 : 0;
@@ -383,7 +433,14 @@ if (yearEl) {
     }
   }
 
-  function animateRatio(el, startSolved, endSolved, startTotal, endTotal, duration) {
+  function animateRatio(
+    el,
+    startSolved,
+    endSolved,
+    startTotal,
+    endTotal,
+    duration
+  ) {
     let startTimestamp = null;
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
@@ -397,11 +454,16 @@ if (yearEl) {
     requestAnimationFrame(step);
   }
 
+  // Kick off both fetches
   fetchGitHubStats();
   fetchLeetCodeStats();
 })();
 
-// ============= TYPING EFFECT =============
+
+/* ═══════════════════════════════════════════════════════════════
+   7. TYPING EFFECT
+   Cycles through role titles with a typewriter animation.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const typingText = document.getElementById("typing-text");
   if (!typingText) return;
@@ -410,7 +472,7 @@ if (yearEl) {
     "Data Scientist",
     "System Programmer",
     "Full Stack Developer",
-    "Problem Solver"
+    "Problem Solver",
   ];
 
   let roleIndex = 0;
@@ -424,31 +486,36 @@ if (yearEl) {
     if (isDeleting) {
       typingText.textContent = currentRole.substring(0, charIndex - 1);
       charIndex--;
-      typeSpeed = 50; // Deleting speed
+      typeSpeed = 50;
     } else {
       typingText.textContent = currentRole.substring(0, charIndex + 1);
       charIndex++;
-      typeSpeed = 100; // Typing speed
+      typeSpeed = 100;
     }
 
     if (!isDeleting && charIndex === currentRole.length) {
       isDeleting = true;
-      typeSpeed = 2000; // Pause at end
+      typeSpeed = 2000; // pause at end
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       roleIndex = (roleIndex + 1) % roles.length;
-      typeSpeed = 500; // Pause before typing next
+      typeSpeed = 500; // pause before next word
     }
 
     setTimeout(type, typeSpeed);
   }
 
-  // Start
   setTimeout(type, 1000);
 })();
 
-// ============= EXPERIENCE — TIMELINE LINE REVEAL + CERTIFICATE MODAL =============
+
+/* ═══════════════════════════════════════════════════════════════
+   8. EXPERIENCE TIMELINE + CERTIFICATE MODAL
+   - Timeline line animates in via IntersectionObserver.
+   - Certificate cards open a detail modal with image preview.
+   ═══════════════════════════════════════════════════════════════ */
 (function () {
+  // Timeline reveal
   const timeline = document.querySelector(".timeline");
   if (timeline && "IntersectionObserver" in window) {
     const obs = new IntersectionObserver(
@@ -465,6 +532,7 @@ if (yearEl) {
     obs.observe(timeline);
   }
 
+  // Certificate modal
   const modal = document.getElementById("cert-modal");
   const certCards = document.querySelectorAll(".cert-card[data-cert-title]");
   if (!modal) return;
@@ -529,7 +597,11 @@ if (yearEl) {
   });
 })();
 
-// ============= PARALLAX TILT EFFECT ON CARDS =============
+
+/* ═══════════════════════════════════════════════════════════════
+   9. CARD PARALLAX TILT
+   Adds a subtle 3D tilt on mouse hover using requestAnimationFrame.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const tiltElements = document.querySelectorAll(
     ".card, .activity-card, .tweets-card, .projects-dash-card"
@@ -550,7 +622,7 @@ if (yearEl) {
           const y = e.clientY - rect.top;
           const centerX = rect.width / 2;
           const centerY = rect.height / 2;
-          const rotateY = ((x - centerX) / centerX) * 5; // max 5deg
+          const rotateY = ((x - centerX) / centerX) * 5;
           const rotateX = ((centerY - y) / centerY) * 5;
           el.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px) scale(1.02)`;
           ticking = false;
@@ -565,7 +637,11 @@ if (yearEl) {
   });
 })();
 
-// ============= RIPPLE CLICK EFFECT =============
+
+/* ═══════════════════════════════════════════════════════════════
+   10. RIPPLE CLICK EFFECT
+   Creates expanding ripple on click for interactive elements.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const rippleTargets = document.querySelectorAll(
     ".card, .activity-card, .tour-card, .cert-card, .btn, .hero__badge, .tweets-card, .projects-dash-card, .project-mini, .tweet-embed"
@@ -586,7 +662,12 @@ if (yearEl) {
   });
 })();
 
-// ============= PROJECT DETAIL MODAL =============
+
+/* ═══════════════════════════════════════════════════════════════
+   11. PROJECT DETAIL MODAL
+   Opens a modal overlay with project details when a project
+   mini-card is clicked in the dashboard.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const modal = document.getElementById("project-modal");
   if (!modal) return;
@@ -641,12 +722,16 @@ if (yearEl) {
   });
 })();
 
-// ============= AMBIENT FLOATING PARTICLES =============
+
+/* ═══════════════════════════════════════════════════════════════
+   12. AMBIENT FLOATING PARTICLES
+   Canvas-based particle system using requestAnimationFrame.
+   Respects prefers-reduced-motion for accessibility.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const canvas = document.getElementById("particles-canvas");
   if (!canvas) return;
 
-  // Respect prefers-reduced-motion
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (prefersReduced.matches) {
     canvas.style.display = "none";
@@ -665,6 +750,13 @@ if (yearEl) {
   resize();
   window.addEventListener("resize", resize, { passive: true });
 
+  const PALETTE = [
+    "255, 62, 165",   // pink
+    "55, 183, 255",   // blue
+    "255, 211, 79",   // gold
+    "200, 200, 255",  // white-ish
+  ];
+
   class Particle {
     constructor() {
       this.reset();
@@ -677,14 +769,7 @@ if (yearEl) {
       this.speedX = (Math.random() - 0.5) * 0.2;
       this.opacity = Math.random() * 0.5 + 0.1;
       this.fadeDir = Math.random() > 0.5 ? 0.002 : -0.002;
-      // Random color from palette
-      const colors = [
-        "255, 62, 165",  // pink
-        "55, 183, 255",  // blue
-        "255, 211, 79",  // gold
-        "200, 200, 255",  // white-ish
-      ];
-      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.color = PALETTE[Math.floor(Math.random() * PALETTE.length)];
     }
     update() {
       this.y += this.speedY;
@@ -703,7 +788,7 @@ if (yearEl) {
 
   for (let i = 0; i < PARTICLE_COUNT; i++) {
     const p = new Particle();
-    p.y = Math.random() * h; // Start spread across screen
+    p.y = Math.random() * h; // spread across screen initially
     particles.push(p);
   }
 
@@ -718,14 +803,19 @@ if (yearEl) {
   animate();
 })();
 
-// ============= ENHANCED CURSOR — SCROLL COLOR SHIFT =============
+
+/* ═══════════════════════════════════════════════════════════════
+   13. CURSOR SCROLL COLOR SHIFT
+   Shifts the cursor spotlight hue from blue → pink as
+   the user scrolls down the page.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
   const cursor = document.getElementById("cursor-spotlight");
   if (!cursor) return;
 
   function updateCursorColor() {
-    const scrollPct = window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
-    // Shift hue from blue (210) through pink (330) as user scrolls
+    const scrollPct =
+      window.scrollY / (document.body.scrollHeight - window.innerHeight || 1);
     const hue = 210 + scrollPct * 120;
     cursor.style.background = `radial-gradient(circle at 50% 50%, hsla(${hue}, 80%, 65%, 0.12), transparent 65%)`;
   }
@@ -734,9 +824,13 @@ if (yearEl) {
   updateCursorColor();
 })();
 
-// ============= STAGGERED SCROLL REVEAL =============
+
+/* ═══════════════════════════════════════════════════════════════
+   14. STAGGERED SCROLL REVEAL
+   Adds incremental transition-delay to sibling .reveal
+   elements inside grids, creating a cascade effect.
+   ═══════════════════════════════════════════════════════════════ */
 (() => {
-  // Add incremental delay to sibling .reveal elements in the same parent
   const groups = document.querySelectorAll(
     ".card-grid, .dashboard-grid, .tour-grid, .cert-grid, .activity-grid, .hero__badges"
   );
