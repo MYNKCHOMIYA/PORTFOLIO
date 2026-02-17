@@ -156,17 +156,32 @@ if (yearEl) {
   const lcUser = root.getAttribute("data-leetcode-user") || "MYNK_CHOMIYA";
 
 
+  /* ─── Helper: fetch with timeout ─── */
+
+  function fetchWithTimeout(url, timeoutMs = 10000) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    return fetch(url, { signal: controller.signal }).finally(() =>
+      clearTimeout(timer)
+    );
+  }
+
+
   /* ─── 6a. GitHub Stats + Heatmap ─── */
 
   async function fetchGitHubStats() {
     try {
-      // Fetch user profile (repos, followers)
-      const profileRes = await fetch(`https://api.github.com/users/${ghUser}`);
-      if (!profileRes.ok) throw new Error("GitHub User Not Found");
-      const profileData = await profileRes.json();
-
       const repoEl = document.getElementById("gh-repos");
       const followerEl = document.getElementById("gh-followers");
+
+      // Show loading state
+      if (repoEl) repoEl.textContent = "…";
+      if (followerEl) followerEl.textContent = "…";
+
+      // Fetch user profile (repos, followers)
+      const profileRes = await fetchWithTimeout(`https://api.github.com/users/${ghUser}`);
+      if (!profileRes.ok) throw new Error("GitHub User Not Found");
+      const profileData = await profileRes.json();
 
       if (repoEl) repoEl.textContent = profileData.public_repos;
       if (followerEl) followerEl.textContent = profileData.followers;
@@ -174,7 +189,7 @@ if (yearEl) {
       // Fetch events for heatmap (up to 3 pages for 60-day coverage)
       const allEvents = [];
       for (let page = 1; page <= 3; page++) {
-        const eventsRes = await fetch(
+        const eventsRes = await fetchWithTimeout(
           `https://api.github.com/users/${ghUser}/events?per_page=100&page=${page}`
         );
         if (!eventsRes.ok) throw new Error("GitHub Events Failed");
@@ -307,70 +322,117 @@ if (yearEl) {
   }
 
 
+
   /* ─── 6b. LeetCode Stats + Ring ─── */
 
   async function fetchLeetCodeStats() {
-    try {
-      const res = await fetch(
-        `https://leetcode-stats-api.herokuapp.com/${lcUser}`
-      );
-      if (!res.ok) throw new Error("LeetCode API Error");
-      const data = await res.json();
+    const ratioEl = document.getElementById("lc-ratio");
+    const attemptingEl = document.getElementById("lc-attempting");
 
-      if (data.status === "error") throw new Error(data.message);
+    // Show loading state
+    if (ratioEl) ratioEl.textContent = "…";
 
-      const totalQ = data.totalQuestions || 3837;
-      const solved = data.totalSolved || 0;
-      const easyS = data.easySolved || 0;
-      const medS = data.mediumSolved || 0;
-      const hardS = data.hardSolved || 0;
-      const totalE = data.totalEasy || 925;
-      const totalM = data.totalMedium || 2005;
-      const totalH = data.totalHard || 907;
+    // --- API chain: try multiple endpoints ---
+    const apis = [
+      {
+        url: `https://alfa-leetcode-api.onrender.com/${lcUser}/solved`,
+        parse(data) {
+          // This API returns { solvedProblem, easySolved, mediumSolved, hardSolved, ... }
+          return {
+            totalSolved: data.solvedProblem || 0,
+            easySolved: data.easySolved || 0,
+            mediumSolved: data.mediumSolved || 0,
+            hardSolved: data.hardSolved || 0,
+            // This API doesn't return totals per-difficulty, use known LeetCode totals
+            totalQuestions: 3457,
+            totalEasy: 867,
+            totalMedium: 1814,
+            totalHard: 776,
+          };
+        },
+      },
+      {
+        url: `https://leetcode-stats-api.herokuapp.com/${lcUser}`,
+        parse(data) {
+          if (data.status === "error") throw new Error(data.message);
+          return {
+            totalSolved: data.totalSolved || 0,
+            easySolved: data.easySolved || 0,
+            mediumSolved: data.mediumSolved || 0,
+            hardSolved: data.hardSolved || 0,
+            totalQuestions: data.totalQuestions || 3457,
+            totalEasy: data.totalEasy || 867,
+            totalMedium: data.totalMedium || 1814,
+            totalHard: data.totalHard || 776,
+          };
+        },
+      },
+    ];
 
-      const ratioEl = document.getElementById("lc-ratio");
-      const attemptingEl = document.getElementById("lc-attempting");
+    let stats = null;
 
-      // Calculate ring segment percentages
-      let pEasy = 0,
-        pMedium = 0,
-        pHard = 0,
-        pTotal = 0;
-      if (solved > 0 && totalQ > 0) {
-        const actualPct = (solved / totalQ) * 100;
-        const minVisible = 18;
-        const scaledTotal = Math.max(actualPct, minVisible);
-        const easyFrac = easyS / solved;
-        const medFrac = medS / solved;
-        const hardFrac = hardS / solved;
-        pEasy = scaledTotal * easyFrac;
-        pMedium = scaledTotal * medFrac;
-        pHard = scaledTotal * hardFrac;
-        pTotal = scaledTotal;
+    for (const api of apis) {
+      try {
+        const res = await fetchWithTimeout(api.url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const raw = await res.json();
+        stats = api.parse(raw);
+        break; // success — stop trying
+      } catch (err) {
+        console.warn(`LeetCode API failed (${api.url}):`, err.message);
       }
-
-      renderLeetCodeRing(pEasy, pMedium, pHard, pTotal);
-
-      // Animated ratio counter
-      if (ratioEl) {
-        animateRatio(ratioEl, 0, solved, 0, totalQ, 1400);
-      }
-
-      if (attemptingEl) {
-        attemptingEl.textContent = "0 Attempting";
-      }
-
-      // Staggered reveal for breakdown bars
-      document
-        .querySelectorAll(".lc-stat-item")
-        .forEach((el) => el.classList.add("lc-stat-item--visible"));
-
-      updateBar("easy", easyS, totalE, 0.3);
-      updateBar("medium", medS, totalM, 0.5);
-      updateBar("hard", hardS, totalH, 0.7);
-    } catch (err) {
-      console.error("LeetCode Fetch Error:", err);
     }
+
+    if (!stats) {
+      // All APIs failed — show graceful error
+      console.error("All LeetCode APIs failed.");
+      if (ratioEl) ratioEl.textContent = "–";
+      if (attemptingEl) attemptingEl.textContent = "Offline";
+      return;
+    }
+
+    // --- Render with stats ---
+    const { totalQuestions: totalQ, totalSolved: solved, easySolved: easyS,
+      mediumSolved: medS, hardSolved: hardS,
+      totalEasy: totalE, totalMedium: totalM, totalHard: totalH } = stats;
+
+    // Calculate ring segment percentages
+    let pEasy = 0,
+      pMedium = 0,
+      pHard = 0,
+      pTotal = 0;
+    if (solved > 0 && totalQ > 0) {
+      const actualPct = (solved / totalQ) * 100;
+      const minVisible = 18;
+      const scaledTotal = Math.max(actualPct, minVisible);
+      const easyFrac = easyS / solved;
+      const medFrac = medS / solved;
+      const hardFrac = hardS / solved;
+      pEasy = scaledTotal * easyFrac;
+      pMedium = scaledTotal * medFrac;
+      pHard = scaledTotal * hardFrac;
+      pTotal = scaledTotal;
+    }
+
+    renderLeetCodeRing(pEasy, pMedium, pHard, pTotal);
+
+    // Animated ratio counter
+    if (ratioEl) {
+      animateRatio(ratioEl, 0, solved, 0, totalQ, 1400);
+    }
+
+    if (attemptingEl) {
+      attemptingEl.textContent = "0 Attempting";
+    }
+
+    // Staggered reveal for breakdown bars
+    document
+      .querySelectorAll(".lc-stat-item")
+      .forEach((el) => el.classList.add("lc-stat-item--visible"));
+
+    updateBar("easy", easyS, totalE, 0.3);
+    updateBar("medium", medS, totalM, 0.5);
+    updateBar("hard", hardS, totalH, 0.7);
   }
 
   function renderLeetCodeRing(pEasy, pMedium, pHard, pTotal) {
