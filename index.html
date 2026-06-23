@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,18 +31,28 @@
     content="Building systems. Not just websites. Explore the projects and skills of Mayank Kumar." />
   <meta property="twitter:image" content="assets/file_00000000916472079e59ba3a78b4bc3f.png" />
 
+  <link rel="icon" type="image/png" href="assets/file_00000000916472079e59ba3a78b4bc3f.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="style.css" />
-  <!-- Vercel Speed Insights -->
+  <!-- Vercel Speed Insights & Analytics (Production Only) -->
   <script>
     window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
-  <!-- Vercel Analytics -->
-  <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    
+    if (window.location.hostname !== 'localhost' && 
+        window.location.hostname !== '127.0.0.1' && 
+        window.location.protocol !== 'file:') {
+      const injectScript = (src) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.defer = true;
+        document.head.appendChild(s);
+      };
+      injectScript('/_vercel/speed-insights/script.js');
+      injectScript('/_vercel/insights/script.js');
+    }
   </script>
-  <script defer src="/_vercel/insights/script.js"></script>
 
 
   <link rel="preload" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" as="style" />
@@ -269,8 +279,6 @@
               </div>
             </div>
           </article>
-          <div class="timeline">
-          <div class="timeline__line" aria-hidden="true"></div>
 
           <article class="timeline__item reveal" data-year="2025">
             <div class="timeline__dot"></div>
@@ -295,9 +303,6 @@
               </div>
             </div>
           </article>
-
-        <div class="timeline">
-          <div class="timeline__line" aria-hidden="true"></div>
 
           <article class="timeline__item reveal" data-year="2025">
             <div class="timeline__dot"></div>
@@ -432,11 +437,11 @@
                   <span>C++</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <i class="devicon-python-plain"></i>
                   <span>PYTHON</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <i class="devicon-javascript-plain"></i>
                   <span>JavaScript</span>
                 </li>
                 <li class="skill-pill">
@@ -463,7 +468,7 @@
                   <span>CSS</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <i class="devicon-react-original"></i>
                   <span>React</span>
                 </li>
                 <li class="skill-pill">
@@ -491,19 +496,19 @@
                   <span>MYSQL</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <i class="devicon-postgresql-plain"></i>
                   <span>PostgreSQL</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <span>🔗</span>
                   <span>SQLachemy ORM</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <span>⚡</span>
                   <span>FastAPI</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <span>🔑</span>
                   <span>JWT TOKEN</span>
                 </li>
               </ul>
@@ -527,7 +532,7 @@
                   <span>GITHUB</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <i class="devicon-docker-plain"></i>
                   <span>Docker</span>
                 </li>
               </ul>
@@ -563,7 +568,7 @@
                   <span>Power BI</span>
                 </li>
                 <li class="skill-pill">
-                  <i class="devicon-cplusplus-plain"></i>
+                  <span>📊</span>
                   <span>Apache Super set</span>
                 </li>
               </ul>

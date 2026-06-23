@@ -23,12 +23,12 @@
 /* ═══════════════════════════════════════════════════════════════
    1. SERVICE WORKER CLEANUP
    ═══════════════════════════════════════════════════════════════ */
-if ("serviceWorker" in navigator) {
+if ("serviceWorker" in navigator && window.location.protocol !== "file:") {
   navigator.serviceWorker.getRegistrations().then((registrations) => {
     for (let registration of registrations) {
       registration.unregister();
     }
-  });
+  }).catch(() => {});
 }
 
 
