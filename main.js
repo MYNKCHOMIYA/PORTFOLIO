@@ -532,9 +532,7 @@ if (yearEl) {
 
   const roles = [
     "Data Scientist",
-    "System Programmer",
-    "Full Stack Developer",
-    "Problem Solver",
+    "Backend Devloper"
   ];
 
   let roleIndex = 0;
@@ -548,11 +546,11 @@ if (yearEl) {
     if (isDeleting) {
       typingText.textContent = currentRole.substring(0, charIndex - 1);
       charIndex--;
-      typeSpeed = 50;
+      typeSpeed = 80;
     } else {
       typingText.textContent = currentRole.substring(0, charIndex + 1);
       charIndex++;
-      typeSpeed = 100;
+      typeSpeed = 130;
     }
 
     if (!isDeleting && charIndex === currentRole.length) {
