@@ -532,7 +532,7 @@ if (yearEl) {
 
   const roles = [
     "Data Scientist",
-    "Backend Devloper"
+    "Backend Developer"
   ];
 
   let roleIndex = 0;
@@ -622,8 +622,8 @@ if (yearEl) {
       linkEl.style.display = url && url !== "#" ? "inline-flex" : "none";
     }
     imgWrap.innerHTML = "";
-    const imgUrl = card.getAttribute("data-cert-img");
-    if (imgUrl) {
+    const imgUrl = card.getAttribute("data-cert-img") || card.getAttribute("data-cert-url");
+    if (imgUrl && imgUrl.match(/\.(jpeg|jpg|png|webp|gif|svg)$/i)) {
       const img = document.createElement("img");
       img.src = imgUrl;
       img.alt = title;
